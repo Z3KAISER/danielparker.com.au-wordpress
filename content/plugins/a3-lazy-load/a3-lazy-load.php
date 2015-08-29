@@ -2,11 +2,11 @@
 /*
 Plugin Name: a3 Lazy Load
 Description: Speed up your site and enhance frontend user's visual experience in PC's, Tablets and mobile with a3 Lazy Load.
-Version: 1.3.0
+Version: 1.4.1
 Author: a3 Revolution
 Author URI: http://www.a3rev.com/
 Requires at least: 3.8
-Tested up to: 4.2.2
+Tested up to: 4.3
 License: GPLv2 or later
 	Copyright © 2011 a3 Revolution Software Development team
 	a3 Revolution Software Development team
@@ -35,8 +35,6 @@ include( 'admin/admin-pages/admin-settings-page.php' );
 
 include( 'admin/admin-init.php' );
 include( 'admin/less/sass.php' );
-
-include( 'classes/addons/class-a3-lazy-load-addons-page.php' );
 
 include( 'classes/class-a3-lazy-load.php' );
 include( 'classes/class-a3-lazy-load-filter.php' );

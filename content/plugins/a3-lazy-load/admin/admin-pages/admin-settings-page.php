@@ -57,33 +57,17 @@ class A3_Lazy_Load_Settings_Page extends A3_Lazy_Load_Admin_UI
 	public function page_data() {
 
 		$page_data = array( 
-			array(
-				'type'				=> 'menu',
-				'page_title'		=> __('a3 Lazy Load','a3_lazy_load'),
-				'menu_title'		=> __('Lazy Load','a3_lazy_load'),
-				'icon_url'			=> '',
-				'position'			=> '25.564',
-				'capability'		=> 'manage_options',
-				'menu_slug'			=> $this->menu_slug,
-				'function'			=> 'a3_lazy_load_settings_page_show',
-				'admin_url'			=> 'admin.php',
-				'callback_function' => 'callback_a3_lazy_load_settings_page_show',
-				'script_function' 	=> '',
-				'view_doc'			=> '',
-			),
-			array(
-				'type'				=> 'submenu',
-				'parent_slug'		=> $this->menu_slug,
-				'page_title'		=> __( 'a3 Lazy Load', 'a3_lazy_load' ),
-				'menu_title'		=> __( 'Settings', 'a3_lazy_load' ),
-				'capability'		=> 'manage_options',
-				'menu_slug'			=> $this->menu_slug,
-				'function'			=> 'a3_lazy_load_settings_page_show',
-				'admin_url'			=> 'admin.php',
-				'callback_function' => 'a3_lazy_load_global_settings_tab_manager',
-				'script_function' 	=> '',
-				'view_doc'			=> '',
-			),
+			'type'				=> 'submenu',
+			'parent_slug'		=> 'options-general.php',
+			'page_title'		=> __('a3 Lazy Load','a3_lazy_load'),
+			'menu_title'		=> __('a3 Lazy Load','a3_lazy_load'),
+			'capability'		=> 'manage_options',
+			'menu_slug'			=> $this->menu_slug,
+			'function'			=> 'a3_lazy_load_settings_page_show',
+			'admin_url'			=> 'options-general.php',
+			'callback_function' => 'callback_a3_lazy_load_settings_page_show',
+			'script_function' 	=> '',
+			'view_doc'			=> '',
 		);
 
 		if ( $this->page_data ) return $this->page_data;
@@ -98,7 +82,7 @@ class A3_Lazy_Load_Settings_Page extends A3_Lazy_Load_Admin_UI
 	public function add_admin_menu( $admin_menu ) {
 
 		if ( ! is_array( $admin_menu ) ) $admin_menu = array();
-		$admin_menu = array_merge( $this->page_data(), $admin_menu );
+		$admin_menu[] = $this->page_data();
 
 		return $admin_menu;
 	}
@@ -118,9 +102,11 @@ class A3_Lazy_Load_Settings_Page extends A3_Lazy_Load_Admin_UI
 	public function admin_settings_page() {
 		global $a3_lazy_load_admin_init;
 
-		$my_page_data = $this->page_data();
-		$my_page_data = array_values( $my_page_data );
-		$a3_lazy_load_admin_init->admin_settings_page( $my_page_data[1] );
+		$a3_lazy_load_admin_init->admin_settings_page( $this->page_data() );
+
+		//$my_page_data = $this->page_data();
+		//$my_page_data = array_values( $my_page_data );
+		//$a3_lazy_load_admin_init->admin_settings_page( $my_page_data[1] );
 	}
 
 	/*-----------------------------------------------------------------------------------*/
@@ -130,7 +116,9 @@ class A3_Lazy_Load_Settings_Page extends A3_Lazy_Load_Admin_UI
 	public function callback_admin_settings_page() {
 		global $a3_lazy_load_global_settings_panel;
 
+		$this->plugin_extension_start();
 		$a3_lazy_load_global_settings_panel->settings_form();
+		$this->plugin_extension_end();
 	}
 
 }

@@ -87,13 +87,9 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 
 		add_action( $this->plugin_name . '_set_default_settings' , array( $this, 'set_default_settings' ) );
 
+		add_action( $this->plugin_name . '-' . $this->form_key . '_settings_init' , array( $this, 'after_save_settings' ) );
+
 		add_action( $this->plugin_name . '_get_all_settings' , array( $this, 'get_settings' ) );
-
-		add_action( $this->plugin_name . '_settings_a3l_container_start_before', array( $this, 'a3l_container_start' ) );
-		add_action( $this->plugin_name . '_settings_a3l_container_end_after', array( $this, 'a3l_container_end' ) );
-
-		//add_action( $this->plugin_name . '_settings_a3l_videos_start_before', array( $this, 'a3l_videos_start' ) );
-		//add_action( $this->plugin_name . '_settings_a3l_videos_end_after', array( $this, 'a3l_videos_end' ) );
 
 	}
 
@@ -115,6 +111,18 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 		global $a3_lazy_load_admin_interface;
 
 		$a3_lazy_load_admin_interface->reset_settings( $this->form_fields, $this->option_name, false );
+	}
+
+	/*-----------------------------------------------------------------------------------*/
+	/* after_save_settings()
+	/* Process when clean on deletion option is un selected */
+	/*-----------------------------------------------------------------------------------*/
+	public function after_save_settings() {
+		if ( ( isset( $_POST['bt_save_settings'] ) || isset( $_POST['bt_reset_settings'] ) ) && get_option( 'a3_lazy_load_clean_on_deletion' ) == 0  )  {
+			$uninstallable_plugins = (array) get_option('uninstall_plugins');
+			unset($uninstallable_plugins[A3_LAZY_LOAD_NAME]);
+			update_option('uninstall_plugins', $uninstallable_plugins);
+		}
 	}
 
 	/*-----------------------------------------------------------------------------------*/
@@ -185,7 +193,43 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
   		// Define settings
      	$this->form_fields = apply_filters( $this->option_name . '_settings_fields', array(
      		array(
+            	'name' 		=> __( 'Plugin Framework Global Settings', 'a3_lazy_load' ),
+            	'id'		=> 'plugin_framework_global_box',
                 'type' 		=> 'heading',
+                'first_open'=> true,
+                'is_box'	=> true,
+           	),
+           	array(
+           		'name'		=> __( 'Customize Admin Setting Box Display', 'a3_lazy_load' ),
+           		'desc'		=> __( 'By default each admin panel will open with all Setting Boxes in the CLOSED position.', 'a3_lazy_load' ),
+                'type' 		=> 'heading',
+           	),
+           	array(
+				'type' 		=> 'onoff_toggle_box',
+			),
+           	array(
+            	'name' 		=> __( 'House Keeping', 'a3_lazy_load' ),
+                'type' 		=> 'heading',
+            ),
+			array(
+				'name' 		=> __( 'Clean up on Deletion', 'a3_lazy_load' ),
+				'desc' 		=> __( 'On deletion (not deactivate) the plugin will completely remove all tables and data it created, leaving no trace it was ever here.', 'a3_lazy_load'),
+				'id' 		=> 'a3_lazy_load_clean_on_deletion',
+				'type' 		=> 'onoff_checkbox',
+				'default'	=> '0',
+				'separate_option'	=> true,
+				'free_version'		=> true,
+				'checked_value'		=> '1',
+				'unchecked_value'	=> '0',
+				'checked_label'		=> __( 'ON', 'a3_lazy_load' ),
+				'unchecked_label' 	=> __( 'OFF', 'a3_lazy_load' ),
+			),
+
+           	array(
+            	'name' 		=> __( 'Lazy Load Activation', 'a3_lazy_load' ),
+                'type' 		=> 'heading',
+                'id'		=> 'lazy_load_enable_box',
+                'is_box'	=> true,
            	),
            	array(
 				'name' 		=> __( 'Enable Lazy Load', 'a3_lazy_load' ),
@@ -200,18 +244,16 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 			),
 
 			array(
-                'type' 		=> 'heading',
-                'id'		=> 'a3l_container_start'
-           	),
-
-			array(
 				'name'		=> __( 'Lazy Load Images', 'a3_lazy_load' ),
                 'type' 		=> 'heading',
-                'class'		=> 'a3l_apply_to_load_container a3l_apply_to_images_container'
+                'class'		=> 'a3l_apply_to_load_container',
+                'id'		=> 'a3l_apply_to_images_box',
+                'is_box'	=> true,
            	),
            	array(
 				'name' 		=> __( 'Enable Lazy Load for Images', 'a3_lazy_load' ),
                 'id' 		=> 'a3l_apply_to_images',
+                'class'		=> 'a3l_apply_to_images',
 				'type' 		=> 'onoff_checkbox',
 				'default'	=> true,
 				'checked_value'		=> true,
@@ -222,8 +264,7 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 
 			array(
                 'type' 		=> 'heading',
-				'id'		=> 'a3l_images_start',
-				'class'		=> 'a3l_apply_to_load_container a3l_apply_to_load_images_container'
+				'class'		=> 'a3l_apply_to_load_images_container'
            	),
 			array(
 				'name' 		=> __( 'Images in Content', 'a3_lazy_load' ),
@@ -288,12 +329,15 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 			array(
 				'name'		=> __( 'Lazy Load Videos and iframes', 'a3_lazy_load' ),
                 'type' 		=> 'heading',
-                'class'		=> 'a3l_apply_to_load_container a3l_apply_to_videos_container'
+                'class'		=> 'a3l_apply_to_load_container',
+                'id'		=> 'a3l_apply_to_videos_box',
+                'is_box'	=> true,
            	),
            	array(
 				'name' 		=> __( 'Video and iframes', 'a3_lazy_load' ),
 				'desc'		=> sprintf( __( 'Turn ON to activate Lazy Load for <a href="%s" target="_blank">WordPress Embeds</a>, <a href="%s" target="_blank">HTML5 Video</a> and content loaded by iframe from all sources. Note: WordPress Shortcode is not supported.', 'a3_lazy_load' ), 'http://codex.wordpress.org/Embeds/', 'http://www.w3schools.com/html/html5_video.asp' ),
                 'id' 		=> 'a3l_apply_to_videos',
+                'class'		=> 'a3l_apply_to_videos',
 				'type' 		=> 'onoff_checkbox',
 				'default'	=> true,
 				'checked_value'		=> true,
@@ -304,8 +348,7 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 
 			array(
                 'type' 		=> 'heading',
-				'id'		=> 'a3l_videos_start',
-				'class'		=> 'a3l_apply_to_load_container a3l_apply_to_load_videos_container'
+				'class'		=> 'a3l_apply_to_load_videos_container'
            	),
 			array(
 				'name' 		=> __( 'In Content', 'a3_lazy_load' ),
@@ -349,7 +392,9 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 			array(
 				'name'		=> __( 'Script Load Optimization', 'a3_lazy_load' ),
                 'type' 		=> 'heading',
-                'class'		=> 'a3l_apply_to_load_container a3l_apply_to_script_container'
+                'class'		=> 'a3l_apply_to_load_container',
+                'id'		=> 'a3l_script_load_optimization_box',
+                'is_box'	=> true,
            	),
 			array(
 				'name' 		=> __( 'Theme Loader Function', 'a3_lazy_load' ),
@@ -366,7 +411,9 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 			array(
 				'name'		=> __( 'WordPress Mobile Template Plugins', 'a3_lazy_load' ),
                 'type' 		=> 'heading',
-                'class'		=> 'a3l_apply_to_load_container'
+                'class'		=> 'a3l_apply_to_load_container',
+                'id'		=> 'a3l_wordpress_mobile_template_box',
+                'is_box'	=> true,
            	),
 			array(
 				'name' 		=> __( 'Disable On WPTouch', 'a3_lazy_load' ),
@@ -393,9 +440,10 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 
 			array(
 				'name' 		=> __( 'Effect & Style', 'a3_lazy_load' ),
-				'id' 		=> "a3l_settings_style",
-				'class'		=> 'a3l_apply_to_load_container a3l_apply_to_effect_container',
+				'class'		=> 'a3l_apply_to_load_container',
                 'type' 		=> 'heading',
+                'id'		=> 'a3l_settings_style_box',
+                'is_box'	=> true,
            	),
 			array(
 				'name' 		=> __( 'Loading Effect', 'a3_lazy_load' ),
@@ -416,7 +464,10 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 
 			array(
 				'name' 		=> __( 'Image Load Threshold', 'a3_lazy_load' ),
+				'class'		=> 'a3l_apply_to_load_container',
                 'type' 		=> 'heading',
+                'id'		=> 'a3l_image_load_theshold_box',
+                'is_box'	=> true,
            	),
 			array(
 				'name' 		=> __( 'Threshold', 'a3_lazy_load' ),
@@ -427,19 +478,7 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 				'css'		=> 'width: 80px;'
 			),
 
-			array(
-                'type' 		=> 'heading',
-                'id'		=> 'a3l_container_end'
-           	),
-
      	));
-	}
-
-	public function a3l_container_start() {
-		echo '<div class="a3l_container">';	
-	}
-	public function a3l_container_end() {
-		echo '</div>';	
 	}
 
 	public function include_script() {
@@ -448,48 +487,42 @@ class A3_Lazy_Load_Global_Settings extends A3_Lazy_Load_Admin_UI
 (function($) {
 	$(document).ready(function() {
 
-		if ( $("input.a3l_apply_to_load").is(":checked") ) {
-			$(".a3l_container").css( {'visibility': 'visible', 'height' : 'auto', 'overflow' : 'inherit'} );
-		} else {
-			$(".a3l_container").css( {'visibility': 'hidden', 'height' : '0px', 'overflow' : 'hidden'} );
+		if ( ! $("input.a3l_apply_to_load").is(":checked") ) {
+			$(".a3l_apply_to_load_container").css( {'visibility': 'hidden', 'height' : '0px', 'overflow' : 'hidden', 'margin-bottom' : '0px'} );
 		}
 
 		$(document).on( "a3rev-ui-onoff_checkbox-switch", '.a3l_apply_to_load', function( event, value, status ) {
-			$(".a3l_container").hide().css( {'visibility': 'visible', 'height' : 'auto', 'overflow' : 'inherit'} );
+			$(".a3l_apply_to_load_container").attr('style','display:none;');
 			if ( status == 'true' ) {
-				$(".a3l_container").slideDown();
+				$(".a3l_apply_to_load_container").slideDown();
 			} else {
-				$(".a3l_container").slideUp();
+				$(".a3l_apply_to_load_container").slideUp();
 			}
 		});
 
-		if ( $("input#a3_lazy_load_global_settings_a3l_apply_to_images:checked").val() == '1') {
-			$("#a3l_images_start").css( {'visibility': 'visible', 'height' : 'auto', 'overflow' : 'inherit'} );
-		} else {
-			$("#a3l_images_start").css( {'visibility': 'hidden', 'height' : '0px', 'overflow' : 'hidden'} );
+		if ( $("input.a3l_apply_to_images:checked").val() != '1') {
+			$(".a3l_apply_to_load_images_container").css( {'visibility': 'hidden', 'height' : '0px', 'overflow' : 'hidden', 'margin-bottom' : '0px'} );
 		}
 
-		$(document).on( "a3rev-ui-onoff_checkbox-switch", '#a3_lazy_load_global_settings_a3l_apply_to_images', function( event, value, status ) {
-			$("#a3l_images_start").hide().css( {'visibility': 'visible', 'height' : 'auto', 'overflow' : 'inherit'} );
+		$(document).on( "a3rev-ui-onoff_checkbox-switch", '.a3l_apply_to_images', function( event, value, status ) {
+			$(".a3l_apply_to_load_images_container").attr('style','display:none;');
 			if ( status == 'true' ) {
-				$("#a3l_images_start").slideDown();
+				$(".a3l_apply_to_load_images_container").slideDown();
 			} else {
-				$("#a3l_images_start").slideUp();
+				$(".a3l_apply_to_load_images_container").slideUp();
 			}
 		});
 
-		if ( $("input#a3_lazy_load_global_settings_a3l_apply_to_videos:checked").val() == '1' ) {
-			$("#a3l_videos_start").css( {'visibility': 'visible', 'height' : 'auto', 'overflow' : 'inherit'} );
-		} else {
-			$("#a3l_videos_start").css( {'visibility': 'hidden', 'height' : '0px', 'overflow' : 'hidden'} );
+		if ( $("input.a3l_apply_to_videos:checked").val() != '1' ) {
+			$(".a3l_apply_to_load_videos_container").css( {'visibility': 'hidden', 'height' : '0px', 'overflow' : 'hidden', 'margin-bottom' : '0px'} );
 		}
 
-		$(document).on( "a3rev-ui-onoff_checkbox-switch", '#a3_lazy_load_global_settings_a3l_apply_to_videos', function( event, value, status ) {
-			$("#a3l_videos_start").hide().css( {'visibility': 'visible', 'height' : 'auto', 'overflow' : 'inherit'} );
+		$(document).on( "a3rev-ui-onoff_checkbox-switch", '.a3l_apply_to_videos', function( event, value, status ) {
+			$(".a3l_apply_to_load_videos_container").attr('style','display:none;');
 			if ( status == 'true' ) {
-				$("#a3l_videos_start").slideDown();
+				$(".a3l_apply_to_load_videos_container").slideDown();
 			} else {
-				$("#a3l_videos_start").slideUp();
+				$(".a3l_apply_to_load_videos_container").slideUp();
 			}
 		});
 

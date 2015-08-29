@@ -2,11 +2,13 @@
 update_option('a3rev_lazy_load_plugin', 'a3_lazy_load');
 
 function a3_lazy_load_activated(){
-	update_option('a3_lazy_load_version', '1.3.0');
+	update_option('a3_lazy_load_version', '1.4.`');
 
 	// Set Settings Default from Admin Init
 	global $a3_lazy_load_admin_init;
 	$a3_lazy_load_admin_init->set_default_settings();
+
+	delete_metadata( 'user', 0, $a3_lazy_load_admin_init->plugin_name . '-' . 'plugin_framework_global_box' . '-' . 'opened', '', true );
 
 	update_option('a3_lazy_load_just_installed', true);
 }
@@ -19,7 +21,7 @@ function a3_lazy_load_init() {
 
 	if ( get_option( 'a3_lazy_load_just_installed' ) ) {
 		delete_option( 'a3_lazy_load_just_installed' );
-		wp_redirect( admin_url( 'admin.php?page=a3-lazy-load', 'relative' ) );
+		wp_redirect( admin_url( 'options-general.php?page=a3-lazy-load', 'relative' ) );
 		exit;
 	}
 
@@ -31,11 +33,17 @@ function a3_lazy_load_init() {
 global $a3_lazy_load_admin_init;
 $a3_lazy_load_admin_init->init();
 
+// Add upgrade notice to Dashboard pages
+add_filter( $a3_lazy_load_admin_init->plugin_name . '_plugin_extension_boxes', array( 'A3_Lazy_Load_Hook_Filter', 'plugin_extension_box' ) );
+
 // Add language
 add_action('init', 'a3_lazy_load_init');
 
 // Add custom style to dashboard
 add_action( 'admin_enqueue_scripts', array( 'A3_Lazy_Load_Hook_Filter', 'a3_wp_admin' ) );
+
+// Add extra link on left of Deactivate link on Plugin manager page
+add_action( 'plugin_action_links_'.A3_LAZY_LOAD_NAME, array( 'A3_Lazy_Load_Hook_Filter', 'settings_plugin_links' ) );
 
 // Add text on right of Visit the plugin on Plugin manager page
 add_filter( 'plugin_row_meta', array( 'A3_Lazy_Load_Hook_Filter', 'plugin_extra_links'), 10, 2 );
@@ -47,10 +55,10 @@ add_action( 'admin_enqueue_scripts', array( 'A3_Lazy_Load_Hook_Filter', 'admin_s
 function a3_lazy_load_upgrade_plugin() {
 
     if (version_compare(get_option('a3_lazy_load_version'), '1.1.0') === -1) {
+    	update_option('a3_lazy_load_version', '1.1.0');
     	include( A3_LAZY_LOAD_DIR. '/includes/updates/a3-lazy-load-update-1.1.0.php' );
-        update_option('a3_lazy_load_version', '1.1.0');
     }
 
-    update_option('a3_lazy_load_version', '1.3.0');
+    update_option('a3_lazy_load_version', '1.4.1');
 }
 ?>

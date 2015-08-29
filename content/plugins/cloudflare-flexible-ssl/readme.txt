@@ -1,12 +1,12 @@
 === Plugin Name ===
-Contributors: paultgoodchild, dlgoodchild 
+Contributors: paultgoodchild
 Donate link: http://icwp.io/q
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
-Tags: CloudFlare, SSL, Flexible SSL, Universal SSL, redirect loop
+Tags: CloudFlare, SSL, Flexible SSL, Universal SSL, redirect loop, HTTPS, HTTP_X_FORWARDED_PROTO
 Requires at least: 3.2.0
-Tested up to: 4.0
-Stable tag: 1.0.0
+Tested up to: 4.3
+Stable tag: 1.2.1
 
 Fix For CloudFlare Flexible SSL Redirect Loop For WordPress.
 
@@ -45,6 +45,19 @@ n/a
 For full installation instructions, please review the following article: [Installation Instructions](http://www.icontrolwp.com/2014/10/enabling-cloudflares-universal-flexible-ssl-wordpress-without-infinite-redirect-loops/).
 
 == Changelog ==
+
+= 1.2.1 =
+
+FIXED:		Checking to ensure certain data types
+
+= 1.2.0 =
+
+ADDED:		The plugin will try to set itself to load first, before all other plugins.
+
+= 1.1.0 =
+
+UPDATED:	Supported WordPress Version
+UPDATED:	Also works for any standard SSL Proxy scenario that uses HTTP_X_FORWARDED_PROTO - it doesn't have to CloudFlare
 
 = 1.0.0 =
 

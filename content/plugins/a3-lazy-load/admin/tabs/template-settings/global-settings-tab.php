@@ -114,7 +114,9 @@ class A3_Lazy_Load_Global_Settings_Tab extends A3_Lazy_Load_Admin_UI
 	public function tab_manager() {
 		global $a3_lazy_load_global_settings_panel;
 
+		$this->plugin_extension_start();
 		$a3_lazy_load_global_settings_panel->settings_form();
+		$this->plugin_extension_end();
 
 		//global $a3_lazy_load_admin_init;
 
