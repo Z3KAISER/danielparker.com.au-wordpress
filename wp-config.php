@@ -78,3 +78,9 @@ define( 'STAGING_DOMAIN', '%%WP_STAGING_DOMAIN%%' ); // Does magic in WP Stack t
 if ( !defined( 'ABSPATH' ) )
 	define( 'ABSPATH', dirname( __FILE__ ) . '/wp/' );
 require_once( ABSPATH . 'wp-settings.php' );
+
+// ===================
+// Remap site url
+// ===================
+define('WP_HOME', 'http://danielparker.com.au/wp');
+define('WP_SITEURL', 'http://danielparker.com.au/wp');
