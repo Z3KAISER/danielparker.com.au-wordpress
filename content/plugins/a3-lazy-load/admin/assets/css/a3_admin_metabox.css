@@ -201,7 +201,8 @@ ul.a3-metabox-data-tabs li.active a {
     width: 100%;
     position: relative;
     background: #fff;
-    padding: 3px
+    padding: 0px;
+    margin: 0px;
 }
 .a3-metabox-wrapper .a3-metabox-item h3 table {
     margin: 0;

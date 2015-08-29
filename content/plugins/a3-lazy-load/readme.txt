@@ -3,8 +3,8 @@
 Contributors: a3rev, A3 Revolution Software Development team
 Tags: a3 lazy load, Lazy Loading , image lazy load, lazyload
 Requires at least: 4.0
-Tested up to: 4.2.2
-Stable tag: 1.3.0
+Tested up to: 4.3
+Stable tag: 1.4.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -144,6 +144,28 @@ Automatic installation is the easiest option as WordPress handles the file trans
 
 == Changelog ==
 
+= 1.4.1 - 2015/08/22 =
+* Tweak - include new CSSMin lib from https://github.com/tubalmartin/YUI-CSS-compressor-PHP-port into plugin framework instead of old CSSMin lib from http://code.google.com/p/cssmin/ , to avoid conflict with plugins or themes that have CSSMin lib
+* Tweak - make __construct() function for 'Compile_Less_Sass' class instead of using a method with the same name as the class for compatibility on WP 4.3 and is deprecated on PHP4
+* Tweak - change class name from 'lessc' to 'a3_lessc' so that it does not conflict with plugins or themes that have another Lessc lib
+* Tweak - Plugin Framework DB query optimization. Refactored settings_get_option call for dynamic style elements, example typography, border, border_styles, border_corner, box_shadow
+* Tweak - Tested for full compatibility with WordPress major version 4.3.0
+* Fix - Update the plugin framework for setup correct default settings on first installed
+* Fix - Update the plugin framework for reset to correct default settings when hit on 'Reset Settings' button on each settings tab
+
+= 1.4.0 - 2015/06/17 =
+* Feature - Plugin framework Mobile First focus upgrade
+* Feature - Massive improvement in admin UI and UX in PC, tablet and mobile browsers
+* Feature - Introducing opening and closing Setting Boxes on admin panels.
+* Feature - Added Plugin Framework Customization settings. Control how the admin panel settings show when editing.
+* Feature - Added House Keeping - Clean up on Deletion function. ON | OFF switch is in the Plugin Framework Settings Box.  
+* Feature - Added a 260px wide images to the right sidebar for support forum link, Documentation links.
+* Tweak - Tested for full compatibility with WooCommerce Version 2.3.11
+* Tweak - Removed Add-Ons Menu
+* Tweak - Moved plugin menu from Wordpress Dashboard admin menu to a sub menu on the WordPress Settings menu
+* Tweak - Added Settings link to the plugins listing on plugin.php menu for easy access to plugin
+* Fix - Check 'request_filesystem_credentials' function, if it does not exists then require the core php lib file from WP where it is defined
+
 = 1.3.0 - 2015/06/05 =
 * Feature - Added Image Load Threshold with set threshold pixel dynamic setting. Default is 0px
 * Credit - Thanks to [Onisforos and Matt Pain](https://wordpress.org/support/topic/setting-threshold?replies=3) for suggesting and explaining the new Threshold feature
@@ -202,6 +224,12 @@ Automatic installation is the easiest option as WordPress handles the file trans
 
 
 == Upgrade Notice ==
+
+= 1.4.1 =
+Major Maintenance Upgrade. 5 Code Tweaks plus 2 bug fixes for full compatibility with WordPress v 4.3.0
+
+= 1.4.0 =
+Major Feature Upgrade. Massive admin panel UI and UX upgrade. Includes 5 new features, 3 Tweaks, 1 bug fix plus full compatibility with WooCommerce Version 2.3.11
 
 = 1.3.0 =
 Feature Upgrade. New Image Loading Threshold feature. Set threshold in pixel that images will start to load before they reach the viewport.

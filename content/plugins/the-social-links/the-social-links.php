@@ -3,7 +3,7 @@
 	Plugin Name: The Social Links
 	Plugin URI: http://digitalleap.co.za/wordpress/plugin/the-social-links/
 	Description: The Social Links plugin adds a widget and shortcode to your WordPress website allowing you to display icons linking to your social profiles.
-	Version: 0.9.0.1
+	Version: 1.0.2
 	Author: Digital Leap
 	Author URI: http://digitalleap.co.za/
 	License: GPL2
@@ -26,56 +26,61 @@
 
 include_once 'includes/class-frontend.php';
 
-register_activation_hook( __FILE__, array( 'The_Social_Links', 'activate' ) );
-
-function the_social_links_update_db_check() {
-
-    $the_social_links_version = The_Social_Links::$the_social_links_version;
-
-	$installed_version = get_site_option( 'the_social_links_version' );
-    if ( !$installed_version  ) :
-        The_Social_Links::legacy_update();
-	elseif($installed_version != $the_social_links_version ):
-        // The_Social_Links::update(); // Not required yet
-    endif;
-
-}
-add_action( 'plugins_loaded', 'the_social_links_update_db_check' );
-
 class The_Social_Links{
 
-	public static $social_networks = array(
-		'facebook' => 'Facebook',
-		'google-plus' => 'Google+',
-		'instagram' => 'Instagram',
-		'linkedin' => 'LinkedIn',
-		'pinterest' => 'Pinterest',
-		'rss' => 'RSS Feed',
-		'twitter' => 'Twitter',
-		'vimeo-square' => 'Vimeo',
-		'youtube' => 'YouTube',
-	);
+	public $social_networks;
 
-	public static $the_social_links_version = 0.9;
+	protected $the_social_links_version = 0.9;
 
-	public static function init(){
+	function __construct(){
+
+        $this->social_networks = apply_filters( 'add_tsl_social_networks', array(
+            'facebook' => 'Facebook',
+            'google-plus' => 'Google+',
+            'instagram' => 'Instagram',
+            'linkedin' => 'LinkedIn',
+            'pinterest' => 'Pinterest',
+            'rss' => 'RSS Feed',
+            'twitter' => 'Twitter',
+            'vimeo-square' => 'Vimeo',
+            'youtube' => 'YouTube',
+        ) );
+
+        asort($this->social_networks);
 
 		// do stuff here
 
-		add_action('admin_menu', __CLASS__ . '::admin_menu');
+		add_action('admin_menu', array( $this, 'admin_menu') );
 
-		add_action( 'admin_init', __CLASS__ . '::register_settings' );
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
 
-		add_action( 'admin_init', __CLASS__ . '::enqueue_scripts' );
-		add_action( 'init', __CLASS__ . '::enqueue_scripts' );
+		add_action( 'admin_init', array( $this, 'enqueue_scripts' ) );
+		add_action( 'init', array( $this, 'enqueue_scripts' ) );
 
-		add_filter( 'plugin_action_links', __CLASS__ . '::action_links', 10, 2 );
+		add_filter( 'plugin_action_links', array( $this, 'action_links') , 10, 2 );
+
+        add_action( 'plugins_loaded', array( $this, 'update_db_check') );
+
+        register_activation_hook( __FILE__, array( $this, 'activate' ) );
 
 	}
 
-	public static function activate(){
+    function update_db_check() {
 
-		$the_social_links_version = self::$the_social_links_version;
+        $the_social_links_version = $this->the_social_links_version;
+
+    	$installed_version = get_site_option( 'the_social_links_version' );
+        if ( !$installed_version  ) :
+            $this->legacy_update();
+    	elseif($installed_version != $the_social_links_version ):
+            // The_Social_Links::update(); // Not required yet
+        endif;
+
+    }
+
+	public function activate(){
+
+		$the_social_links_version = $this->the_social_links_version;
 
 		if( !get_option( 'the_social_links_settings' ) )
 			update_option('the_social_links_settings',array(
@@ -88,9 +93,9 @@ class The_Social_Links{
 
 	}
 
-	public static function legacy_update(){
+	function legacy_update(){
 
-		$the_social_links_version = self::$the_social_links_version;
+		$the_social_links_version = $this->the_social_links_version;
 
 		$settings = get_option('the_social_links_settings');
 
@@ -103,7 +108,7 @@ class The_Social_Links{
 				'links' => array(),
 			);
 
-		foreach(self::$social_networks as $social_network => $network_name):
+		foreach($this->social_networks as $social_network => $network_name):
 
 			$old_network = get_option('tsl_'.$social_network);
 
@@ -137,7 +142,7 @@ class The_Social_Links{
 
 	}
 
-	public static function enqueue_scripts(){
+	public function enqueue_scripts(){
 
 		wp_enqueue_script( 'jquery-ui-sortable', null, array('jquery') );
 
@@ -146,17 +151,17 @@ class The_Social_Links{
 
 	}
 
-	public static function admin_menu(){
+	function admin_menu(){
 
-		add_menu_page('The Social Links', 'The Social Links', 'administrator', 'the-social-links', __CLASS__ . '::settings_page', 'dashicons-share');
+		add_menu_page('The Social Links', 'The Social Links', 'administrator', 'the-social-links', array( $this, 'settings_page') , 'dashicons-share');
 
 	}
 
-	public static function settings_page() {
+	public function settings_page() {
 
 		?>
 
-		<div class="wrap">
+		<div class="wrap admin">
 
     		<h2><?php _e( 'The Social Links', 'the-social-links-plugin' ) ?></h2>
 
@@ -172,27 +177,31 @@ class The_Social_Links{
     		<table class="form-table">
     		<tr valign="top">
     		<td scope="row" style="width:270px;"><strong>Networks</strong><br />Selects the networks that you would like to display</td>
-    		<td>
+    		<td class="social-networks">
     			<?php
     				$networks = $settings['networks'];
     				if(!$networks)
     					$networks = array();
     			?>
-    			<?php foreach(self::$social_networks as $key => $social_network):?>
-    				<label><input type="checkbox" name="the_social_links_settings[networks][]" value="<?php echo $key;?>" <?php checked( in_array( $key, $networks ) , true);?> /> <?php echo $social_network;?></label><br>
+    			<?php foreach($this->social_networks as $key => $social_network):?>
+    				<label><input type="checkbox" name="the_social_links_settings[networks][]" value="<?php echo $key;?>" <?php checked( in_array( $key, $networks ) , true);?> /> <?php echo $social_network;?></label>
     			<?php endforeach;?>
     		</td>
     		</tr>
     		</table>
+
+            <?php $styles = apply_filters( 'add_tsl_styles', array( 'square' => 'Square', 'rounded' => 'Rounded', 'circle' => 'Circle' ) );?>
 
     		<table class="form-table">
     		<tr valign="top">
     		<td scope="row" style="width:270px;"><strong>Style</strong><br />Select the style of the icons.</td>
     		<td>
     			<select name="the_social_links_settings[style]">
-    				<option value="square" <?php selected('square', $settings['style'] )?>>Square</option>
-    				<option value="rounded" <?php selected('rounded', $settings['style'] )?>>Rounded</option>
-    				<option value="circle" <?php selected('circle', $settings['style'] )?>>Circle</option>
+                    <?php foreach($styles as $key => $style):?>
+                    <option value="<?php echo $key;?>" <?php selected( $key, $settings['style'] )?>><?php echo $style; ?></option>
+
+                    <?php endforeach;
+                    ?>
     			</select>
     		</td>
     		</tr>
@@ -272,8 +281,8 @@ class The_Social_Links{
 
     					<li class="tsl-item">
     						<i class="fa fa-arrows-v"></i>&nbsp;
-    						<a class="the-social-links tsl-<?php echo $settings['style'];?> tsl-<?php echo $settings['size'] ;?> tsl-default tsl-<?php echo $network;?>" target="<?php echo $settings['target'] ;?>" alt="<?php echo self::$social_networks[$network];?>" title="<?php echo self::$social_networks[$network];?>"><i class="fa fa-<?php echo $network;?>"></i></a>
-    						<input placeholder="<?php echo self::$social_networks[$network];?> URL" type="text" name="the_social_links_settings[links][][<?php echo $network;?>]" value="<?php echo $value;?>" />
+    						<a class="the-social-links tsl-<?php echo $settings['style'];?> tsl-<?php echo $settings['size'] ;?> tsl-default tsl-<?php echo $network;?>" target="<?php echo $settings['target'] ;?>" alt="<?php echo $this->social_networks[$network];?>" title="<?php echo $this->social_networks[$network];?>"><i class="fa fa-<?php echo $network;?>"></i></a>
+    						<input placeholder="<?php echo $this->social_networks[$network];?> URL" type="text" name="the_social_links_settings[links][][<?php echo $network;?>]" value="<?php echo $value;?>" />
     					</li>
 
     				<?php endforeach;?>
@@ -292,7 +301,13 @@ class The_Social_Links{
 
             <div>
 
-                <a href="http://digitalleap.co.za/wordpress/plugins/social-links/">Visit The Social Links page on the Digital Leap website</a> | <a href="http://digitalleap.zendesk.com/">Digital Leap Support</a>
+                
+                <p>
+                    <a href="https://digitalleap.co.za/wordpress/plugins/social-links/the-social-links-pack/">Want extra social networks? ($5)</a> | <a href="https://digitalleap.co.za/wordpress/plugins/social-links/priority-support/">Premium Support ($15)</a> | <a href="https://support.digitalleap.co.za/">Get Support</a><br />
+                    If you like <strong>The Social Links</strong> please leave us a <a href="https://wordpress.org/support/view/plugin-reviews/the-social-links?filter=5#postform" target="_blank" class="tsl-rating-link" data-rated="Thanks a lot! :D">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. A huge thank you from Digital Leap in advance!<br />
+                    <a href="https://digitalleap.co.za/wordpress/plugins/social-links/">Visit The Social Links page on the Digital Leap website</a>
+                </p>
+                <p><a href="http://digitalleap.co.za/"><img src="https://digitalleap.co.za/logos/dldark.png" alt="Digital Leap" title="Digital Leap" /></p>
 
             </div>
 
@@ -308,14 +323,14 @@ class The_Social_Links{
 
 	}
 
-	public static function register_settings() {
+	function register_settings() {
 
-		register_setting( 'the_social_links_settings', 'the_social_links_settings', __CLASS__ . '::sanitize' );
+		register_setting( 'the_social_links_settings', 'the_social_links_settings', array( $this, 'sanitize' ) );
 
 	}
 
     // Sanitize and validate input. Accepts an array, return a sanitized array.
-    public static function sanitize($input) {
+    public function sanitize($input) {
 
         // Say our second option must be safe text with no HTML tags
         if(!empty($input['links'])):
@@ -334,7 +349,7 @@ class The_Social_Links{
         return $input;
     }
 
-	public static function action_links( $links, $file ) {
+	public function action_links( $links, $file ) {
 		if ( $file == plugin_basename( dirname(__FILE__).'/the-social-links.php' ) ) {
 			$links[] = '<a href="' . admin_url('admin.php?page=the-social-links') . '">'.__('Settings').'</a>';
             $links[] = '<a href="http://digitalleap.co.za/wordpress/plugins/social-links/">'.__('Plugin Website').'</a>';
@@ -344,6 +359,15 @@ class The_Social_Links{
 	}
 
 }
-The_Social_Links::init();
+
+/**
+ * Extension main function
+ */
+function __tsl_main() {
+    new The_Social_Links();
+}
+
+// Initialize plugin when plugins are loaded
+add_action( 'plugins_loaded', '__tsl_main' );
 
 ?>

@@ -35,3 +35,4 @@ a.tsl-default:hover, a.tsl-default:hover{background:#222;color:#fff !important;}
 
 /* Admin */
 .tsl-links .tsl-item{cursor: move;}
+.admin .social-networks label{width: 33%;display: inline-block;margin-bottom:10px;}

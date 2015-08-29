@@ -11,6 +11,21 @@ body.rtl {
 }
 .a3rev_panel_container {
 
+	.a3rev_panel_box_handle {
+		padding: 8px 38px 8px 12px;
+
+		.pro_feature_top_message {
+			text-align: right;
+		}
+	}
+
+	.a3-plugin-ui-panel-box {
+		&:before {
+			left: auto;
+			right: 10px;
+		}
+	}
+
 	code {
     	float: right;
 	}
@@ -176,35 +191,13 @@ body.rtl {
 
 /* Style for yellow box about Pro or Ultimate version */
 #a3_plugin_panel_fields {
-	float: right;
-
-	.pro_feature_fields {
-		margin-left: -12px;
-		margin-right: 0px;
-		.border_radius_corner(@topleft:0px, @topright:10px, @bottomleft:0px, @bottomright:10px);
-		border-left: 2px solid #FFFFFF;
-		border-right: 2px solid #E6DB55;
-
-		p {
-			margin-left:0px;
-			margin-right:5px;
-		}
-	}
+	padding-left: 280px;
+	padding-right: 0px;
 }
 #a3_plugin_panel_upgrade_area {
-	margin-left: 0px;
-	margin-right: 65%;
 	padding-left: 0px;
-	padding-right:10px;
-
-	#a3_plugin_panel_extensions {
-		a:first-child {
-			float: left !important;
-			clear: left !important;
-			margin-left: 0px !important;
-			margin-right: 10px;
-		}
-	}
+	padding-right:20px;
+	float: left;
 }
 
 /* Custom for each element web icons font */

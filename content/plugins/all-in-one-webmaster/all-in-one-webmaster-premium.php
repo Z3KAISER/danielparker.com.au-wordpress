@@ -15,7 +15,7 @@
  *            Plugin Name: All in One Webmaster
  *            Plugin URI: http://crunchify.com/all-in-one-webmaster/
  *            Description: All in One Webmaster is the best webmaster plugin for WordPress that adds Meta-Tags and Scripts to your Site's Header and Footer Section automatically without changing any of your themes file and without slowing down your site.
- *            Version: 9.7
+ *            Version: 9.8
  *            Author: Arpit Shah
  *            Author URI: http://crunchify.com/
  *            Text Domain: aiow
@@ -40,7 +40,7 @@ class aiow_premium {
 	 *       
 	 * @var string
 	 */
-	protected $version = '9.7';
+	protected $version = '9.8';
 	
 	/**
 	 * The name of the plugin.
