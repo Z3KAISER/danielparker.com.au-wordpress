@@ -1,0 +1,1 @@
+[19-Apr-2014 09:05:17 Antarctica/Macquarie] PHP Fatal error:  Call to undefined function add_action() in /home/rlgod/public_html/wp-content/plugins/hello.php on line 60

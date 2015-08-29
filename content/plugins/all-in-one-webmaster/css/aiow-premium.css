@@ -1,0 +1,8 @@
+.form-table th {
+padding: 20px 10px 20px 10px !important;
+}
+
+#poststuff h3, .metabox-holder h3 {
+font-size: 16px !important;
+font-style: italic !important;
+} 

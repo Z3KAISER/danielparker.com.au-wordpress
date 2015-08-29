@@ -1,0 +1,476 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: a3 Lazy Load\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-06-05 17:22+0700\n"
+"PO-Revision-Date: 2015-06-05 17:22+0700\n"
+"Last-Translator: Nguyen Cong Tuan <mr.nguyencongtuan@gmail.com>\n"
+"Language-Team: a3rev\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: ../\n"
+"X-Generator: Poedit 1.6.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/admin-interface.php:143
+#: admin/settings/template-settings/global-settings.php:81
+msgid "Settings successfully saved."
+msgstr ""
+
+#: admin/admin-interface.php:151
+#: admin/settings/template-settings/global-settings.php:82
+msgid "Error: Settings can not save."
+msgstr ""
+
+#: admin/admin-interface.php:159
+#: admin/settings/template-settings/global-settings.php:83
+msgid "Settings successfully reseted."
+msgstr ""
+
+#: admin/admin-interface.php:180
+msgid "Thin"
+msgstr ""
+
+#: admin/admin-interface.php:181
+msgid "Thin/Italic"
+msgstr ""
+
+#: admin/admin-interface.php:182
+msgid "Normal"
+msgstr ""
+
+#: admin/admin-interface.php:183
+msgid "Italic"
+msgstr ""
+
+#: admin/admin-interface.php:184
+msgid "Bold"
+msgstr ""
+
+#: admin/admin-interface.php:185
+msgid "Bold/Italic"
+msgstr ""
+
+#: admin/admin-interface.php:195
+msgid "Solid"
+msgstr ""
+
+#: admin/admin-interface.php:196
+msgid "Double"
+msgstr ""
+
+#: admin/admin-interface.php:197
+msgid "Dashed"
+msgstr ""
+
+#: admin/admin-interface.php:198
+msgid "Dotted"
+msgstr ""
+
+#: admin/admin-interface.php:199
+msgid "Groove"
+msgstr ""
+
+#: admin/admin-interface.php:200
+msgid "Ridge"
+msgstr ""
+
+#: admin/admin-interface.php:201
+msgid "Inset"
+msgstr ""
+
+#: admin/admin-interface.php:202
+msgid "Outset"
+msgstr ""
+
+#: admin/admin-interface.php:1377 admin/admin-interface.php:1467
+#: admin/admin-interface.php:1496
+#: admin/settings/template-settings/global-settings.php:198
+#: admin/settings/template-settings/global-settings.php:219
+#: admin/settings/template-settings/global-settings.php:235
+#: admin/settings/template-settings/global-settings.php:245
+#: admin/settings/template-settings/global-settings.php:255
+#: admin/settings/template-settings/global-settings.php:265
+#: admin/settings/template-settings/global-settings.php:283
+#: admin/settings/template-settings/global-settings.php:301
+#: admin/settings/template-settings/global-settings.php:317
+#: admin/settings/template-settings/global-settings.php:327
+#: admin/settings/template-settings/global-settings.php:345
+#: admin/settings/template-settings/global-settings.php:379
+#: admin/settings/template-settings/global-settings.php:390
+msgid "ON"
+msgstr ""
+
+#: admin/admin-interface.php:1378 admin/admin-interface.php:1468
+#: admin/admin-interface.php:1497
+#: admin/settings/template-settings/global-settings.php:199
+#: admin/settings/template-settings/global-settings.php:220
+#: admin/settings/template-settings/global-settings.php:236
+#: admin/settings/template-settings/global-settings.php:246
+#: admin/settings/template-settings/global-settings.php:256
+#: admin/settings/template-settings/global-settings.php:266
+#: admin/settings/template-settings/global-settings.php:284
+#: admin/settings/template-settings/global-settings.php:302
+#: admin/settings/template-settings/global-settings.php:318
+#: admin/settings/template-settings/global-settings.php:328
+#: admin/settings/template-settings/global-settings.php:346
+#: admin/settings/template-settings/global-settings.php:380
+#: admin/settings/template-settings/global-settings.php:391
+msgid "OFF"
+msgstr ""
+
+#: admin/admin-interface.php:1538
+msgid "Width"
+msgstr ""
+
+#: admin/admin-interface.php:1540
+msgid "Height"
+msgstr ""
+
+#: admin/admin-interface.php:1542
+msgid "Hard Crop"
+msgstr ""
+
+#: admin/admin-interface.php:1622
+msgid "-- Default Fonts --"
+msgstr ""
+
+#: admin/admin-interface.php:1633
+msgid "-- Google Fonts --"
+msgstr ""
+
+#: admin/admin-interface.php:1674
+msgid "Preview your customized typography settings"
+msgstr ""
+
+#: admin/admin-interface.php:1808 admin/admin-interface.php:2067
+msgid "Preview your customized border settings"
+msgstr ""
+
+#: admin/admin-interface.php:1817 admin/admin-interface.php:2058
+msgid "Rounded"
+msgstr ""
+
+#: admin/admin-interface.php:1818 admin/admin-interface.php:2059
+msgid "Square"
+msgstr ""
+
+#: admin/admin-interface.php:1828 admin/admin-interface.php:2072
+msgid "Top Left Corner"
+msgstr ""
+
+#: admin/admin-interface.php:1848 admin/admin-interface.php:2092
+msgid "Top Right Corner"
+msgstr ""
+
+#: admin/admin-interface.php:1868 admin/admin-interface.php:2112
+msgid "Bottom Right Corner"
+msgstr ""
+
+#: admin/admin-interface.php:1888 admin/admin-interface.php:2132
+msgid "Bottom Left Corner"
+msgstr ""
+
+#: admin/admin-interface.php:1981
+msgid "Preview your customized border styles settings"
+msgstr ""
+
+#: admin/admin-interface.php:2193
+msgid "YES"
+msgstr ""
+
+#: admin/admin-interface.php:2194
+msgid "NO"
+msgstr ""
+
+#: admin/admin-interface.php:2208
+msgid "Horizontal Shadow"
+msgstr ""
+
+#: admin/admin-interface.php:2226
+msgid "Vertical Shadow"
+msgstr ""
+
+#: admin/admin-interface.php:2244
+msgid "Blur Distance"
+msgstr ""
+
+#: admin/admin-interface.php:2262
+msgid "Spread Size"
+msgstr ""
+
+#: admin/admin-interface.php:2280
+msgid "INNER"
+msgstr ""
+
+#: admin/admin-interface.php:2281
+msgid "OUTER"
+msgstr ""
+
+#: admin/admin-interface.php:2299
+msgid "Preview your customized box shadow settings"
+msgstr ""
+
+#: admin/admin-interface.php:2535
+msgid "Save changes"
+msgstr ""
+
+#: admin/admin-interface.php:2536
+msgid "Reset Settings"
+msgstr ""
+
+#: admin/admin-pages/admin-settings-page.php:62
+#: admin/admin-pages/admin-settings-page.php:77
+msgid "a3 Lazy Load"
+msgstr ""
+
+#: admin/admin-pages/admin-settings-page.php:63
+msgid "Lazy Load"
+msgstr ""
+
+#: admin/admin-pages/admin-settings-page.php:78
+#: classes/class-a3-lazy-load-filter.php:16
+msgid "Settings"
+msgstr ""
+
+#: admin/admin-ui.php:135
+#, php-format
+msgid "Settings inside this yellow border are %s Features."
+msgstr ""
+
+#: admin/admin-ui.php:137
+#, php-format
+msgid ""
+"Upgrade to the <a href=\"%s\" target=\"_blank\">%s</a> to activate these "
+"settings."
+msgstr ""
+
+#: admin/admin-ui.php:139 admin/admin-ui.php:141
+msgid "Pro Version"
+msgstr ""
+
+#: admin/includes/uploader/class-uploader.php:152
+msgid "Upload"
+msgstr ""
+
+#: admin/includes/uploader/class-uploader.php:172
+msgid "View File"
+msgstr ""
+
+#: admin/includes/uploader/class-uploader.php:191
+msgid "Use this Image"
+msgstr ""
+
+#: admin/includes/uploader/class-uploader.php:192
+msgid "Use as"
+msgstr ""
+
+#: admin/includes/uploader/class-uploader.php:202
+msgid "Previously Uploaded"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:145
+#: admin/tabs/template-settings/global-settings-tab.php:78
+msgid "Global Settings"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:191
+msgid "Enable Lazy Load"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:208
+msgid "Lazy Load Images"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:213
+msgid "Enable Lazy Load for Images"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:229
+msgid "Images in Content"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:239
+msgid "Images in Widgets"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:249
+msgid "Post Thumbnails"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:259
+msgid "Gravatars"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:269
+msgid "Skip Images Classes"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:271
+msgid "Comma separated. Example: \"no-lazy, lazy-ignore, image-235\""
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:276
+#: admin/settings/template-settings/global-settings.php:338
+msgid "Noscript Support"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:278
+msgid ""
+"Turn ON to activate Noscript tag as a fallback to show images for users who "
+"have JavaScript disabled in their browser."
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:289
+msgid "Lazy Load Videos and iframes"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:294
+msgid "Video and iframes"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:295
+#, php-format
+msgid ""
+"Turn ON to activate Lazy Load for <a href=\"%s\" target=\"_blank\">WordPress "
+"Embeds</a>, <a href=\"%s\" target=\"_blank\">HTML5 Video</a> and content "
+"loaded by iframe from all sources. Note: WordPress Shortcode is not "
+"supported."
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:311
+msgid "In Content"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:321
+msgid "In Widgets"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:331
+msgid "Skip Videos Classes"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:333
+msgid "Comma separated. Example: \"no-lazy, lazy-ignore, video-235\""
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:340
+msgid ""
+"Turn ON to activate Noscript tag as a fallback to show WordPress Embeds, "
+"HTML 5 Video and iframe loaded content for users who have JavaScript "
+"disabled in their browser."
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:350
+msgid "Script Load Optimization"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:355
+msgid "Theme Loader Function"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:356
+msgid ""
+"Your theme must have the wp_footer() function if you select FOOTER load."
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:362
+msgid "HEADER"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:363
+msgid "FOOTER"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:367
+msgid "WordPress Mobile Template Plugins"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:372
+msgid "Disable On WPTouch"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:373
+msgid "Disables a3 Lazy Load when the WPTouch mobile theme is used"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:383
+msgid "Disable On MobilePress"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:384
+msgid "Disables a3 Lazy Load when the MobilePress mobile theme is used"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:395
+msgid "Effect & Style"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:401
+msgid "Loading Effect"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:407
+msgid "FADE IN"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:408
+msgid "SPINNER"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:411
+msgid "Loading Background Colour"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:418
+msgid "Image Load Threshold"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:422
+msgid "Threshold"
+msgstr ""
+
+#: admin/settings/template-settings/global-settings.php:424
+msgid ""
+"Expands visible page area (viewport) in vertical direction by the amount of "
+"pixels set. Elements start to load as soon as the reach the threshold "
+"instead of when they reach the actual viewport."
+msgstr ""
+
+#: classes/addons/class-a3-lazy-load-addons-page.php:23
+#: classes/addons/class-a3-lazy-load-addons-page.php:38
+msgid "a3 Lazy Load Add-ons/Extensions"
+msgstr ""
+
+#: classes/addons/class-a3-lazy-load-addons-page.php:23
+#: classes/addons/class-a3-lazy-load-addons-page.php:58
+msgid "Add-ons"
+msgstr ""
+
+#: classes/addons/class-a3-lazy-load-addons-page.php:198
+msgid "Installed"
+msgstr ""
+
+#: classes/addons/class-a3-lazy-load-addons-page.php:200
+msgid "Activate"
+msgstr ""
+
+#: classes/addons/class-a3-lazy-load-addons-page.php:203
+msgid "Get this extension"
+msgstr ""
+
+#: classes/addons/class-a3-lazy-load-addons-page.php:209
+msgid "Free"
+msgstr ""
+
+#: classes/addons/class-a3-lazy-load-addons-page.php:217
+msgid "Comming Soon"
+msgstr ""
+
+#: classes/class-a3-lazy-load-filter.php:17
+msgid "Support"
+msgstr ""
