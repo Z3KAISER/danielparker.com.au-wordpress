@@ -85,5 +85,5 @@ require_once( ABSPATH . 'wp-settings.php' );
 // ===================
 // Remap site url
 // ===================
-define('WP_HOME', 'http://danielparker.com.au/wp');
+define('WP_HOME', 'http://danielparker.com.au');
 define('WP_SITEURL', 'http://danielparker.com.au/wp');

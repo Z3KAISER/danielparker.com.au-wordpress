@@ -277,7 +277,7 @@ return array(
 		9 => '{plugins_dir}/*.png',
 	),
 	'cdn.import.external' => false,
-	'cdn.import.files' => false,
+	'cdn.import.files' => '',
 	'cdn.queue.interval' => 900,
 	'cdn.queue.limit' => 25,
 	'cdn.force.rewrite' => false,
@@ -420,7 +420,7 @@ return array(
 	'browsercache.other.etag' => false,
 	'browsercache.other.w3tc' => false,
 	'browsercache.other.replace' => false,
-	'browsercache.timestamp' => '',
+	'browsercache.timestamp' => '1440837768',
 	'browsercache.replace.exceptions' => array(
 	),
 	'mobile.enabled' => false,
