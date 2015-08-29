@@ -14,17 +14,18 @@ if ( file_exists( dirname( __FILE__ ) . '/local-config.php' ) ) {
 	define( 'DB_NAME', getenv('DB_NAME') );
 	define( 'DB_USER', getenv('DB_USER') );
 	define( 'DB_PASSWORD', getenv('DB_PASSWORD') );
-	define( 'DB_HOST', getenv('DB_HOST') ); // Probably 'localhost'
-
-	define( 'AUTH_KEY',         getenv('AUTH_KEY') );
-	define( 'SECURE_AUTH_KEY',  getenv('SECURE_AUTH_KEY') );
-	define( 'LOGGED_IN_KEY',    getenv('LOGGED_IN_KEY') );
-	define( 'NONCE_KEY',        getenv('NONCE_KEY') );
-	define( 'AUTH_SALT',        getenv('AUTH_SALT') );
-	define( 'SECURE_AUTH_SALT', getenv('SECURE_AUTH_SALT') );
-	define( 'LOGGED_IN_SALT',   getenv('LOGGED_IN_SALT') );
-	define( 'NONCE_SALT',       getenv('NONCE_SALT') );
+	define( 'DB_HOST', getenv('DB_HOST') );
 }
+
+/* Keys and salts */
+define('AUTH_KEY',         'q0a|68w{ 1ID(4}5pc5ofiO{E=>*IpYdgm!(yG-:bLQyhxa!89^<lyHD6j&p>=(f');
+define('SECURE_AUTH_KEY',  't3T|G+;od%<0pg[Q*w+|V=-V0~:E~UStfW1uz-[i0id0+E]yPL_j+Ed0C+VWgDbY');
+define('LOGGED_IN_KEY',    'x1>aSp`))adRQhZ^y;e8A}FhOim~InV8.*Cw?|*H1kONMJ68=CBR)SCCzWg<k E5');
+define('NONCE_KEY',        '##8a-[B8W^F*b/)kg>.P{v[)z,ou~r:yT|x 7u:kjUgZJ`kICL|,-GnCgw[aVxH%');
+define('AUTH_SALT',        'fpey=I|<o7i>=Dl4m!PC| :sEVlg|@E6J6CRd=7?A@^X%[w&98/hR#~C^N0r,j;o');
+define('SECURE_AUTH_SALT', 'o0=Z+C)@{~jb5glQ]Of:*X+hJI=YToOyY{=Nwf-a>E#tYQ 4*JbIXkYLgHp0~Oz7');
+define('LOGGED_IN_SALT',   '|Z7hYIYf,dkKp.,1diB~!$:@D&S>@y>%pb,WE& B9vm!~*Nx=LRK?qEKh)t::)w,');
+define('NONCE_SALT',       'Ch+?]lTA*!+}43SjM>?p[5G}=k{&P!p-R/8?N__fm0|W|6XgdKnv.5#52&y9Tnht');
 
 // ========================
 // Custom Content Directory
