@@ -18,7 +18,7 @@ deploy:
   bucket_name: wordpress-blog-deployments
   bucket_path: 'releases'
   zip-file: 'dpl_cd_upload/$TRAVIS_BUILD_NUMBER.package.zip'
-  app: Wordpress-blog
+  app: Blog
   env: production
   skip_cleanup: true
   on:
