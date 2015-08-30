@@ -11,10 +11,16 @@ if ( file_exists( dirname( __FILE__ ) . '/local-config.php' ) ) {
 } else {
 	/* Grab db credentials, keys and salts from environment */
 	define( 'WP_LOCAL_DEV', false );
-	define( 'DB_NAME', getenv('DB_NAME') );
-	define( 'DB_USER', getenv('DB_USER') );
-	define( 'DB_PASSWORD', getenv('DB_PASSWORD') );
-	define( 'DB_HOST', getenv('DB_HOST') );
+	define( 'DB_NAME', $_SERVER['DB_NAME'] );
+	define( 'DB_USER', $_SERVER['DB_USER'] );
+	define( 'DB_PASSWORD', $_SERVER['DB_PASSWORD'] );
+	define( 'DB_HOST', $_SERVER['DB_HOST'] );
+
+	// ===================
+	// Remap site url
+	// ===================
+	define('WP_HOME', $_SERVER['WP_HOME']);
+	define('WP_SITEURL', $_SERVER['WP_SITEURL']);
 }
 
 /* Keys and salts */
@@ -82,9 +88,3 @@ define( 'STAGING_DOMAIN', '%%WP_STAGING_DOMAIN%%' ); // Does magic in WP Stack t
 if ( !defined( 'ABSPATH' ) )
 	define( 'ABSPATH', dirname( __FILE__ ) . '/wp/' );
 require_once( ABSPATH . 'wp-settings.php' );
-
-// ===================
-// Remap site url
-// ===================
-define('WP_HOME', 'http://danielparker.com.au');
-define('WP_SITEURL', 'http://danielparker.com.au/wp');
