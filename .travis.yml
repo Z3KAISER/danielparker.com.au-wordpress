@@ -28,3 +28,6 @@ deploy:
 branches:
   only:
   - release
+notifications:
+  slack:
+    secure: vDYKi5LiLTV8ohu9sJKdeSUqaGSgn3R6xRuFo2xQCYwkEUHlFC618zLjmgFEYaI628UWYLzBPMt4NkRm2veKyMeIkgIVvNmJdX6pxVLCvC4x/h1GIiwQUciKdPmOjeeq1biFbdKMHVbsIM3qNLqcrue
