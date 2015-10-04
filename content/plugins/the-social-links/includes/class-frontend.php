@@ -35,8 +35,6 @@ class The_Social_Links_Frontend{
 
         $output = '';
 
-        $output .= '<div class="the-social-links">';
-
         if( !empty( $settings['links'] ) ):
 
             foreach($settings['links'] as $link):
@@ -51,8 +49,6 @@ class The_Social_Links_Frontend{
             endforeach;
 
         endif;
-
-        $output .= '</div>';
 
         if($echo)
             echo $output;
@@ -82,8 +78,8 @@ class The_Social_Links_Widget extends WP_Widget {
 	public function __construct() {
 		parent::__construct(
 			'the_social_links', // Base ID
-			__( 'The Social Links', 'the-social-links-plugin' ), // Name
-			array( 'description' => __( 'Adds your social links to your widgetised area.', 'the-social-links-plugin' ), ) // Args
+			__( 'The Social Links', 'the-social-links' ), // Name
+			array( 'description' => __( 'Adds your social links to your widgetised area.', 'the-social-links' ), ) // Args
 		);
 	}
 
