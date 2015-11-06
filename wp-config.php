@@ -37,7 +37,7 @@ define('NONCE_SALT',       'Ch+?]lTA*!+}43SjM>?p[5G}=k{&P!p-R/8?N__fm0|W|6XgdKnv
 // Custom Content Directory
 // ========================
 define( 'WP_CONTENT_DIR', dirname( __FILE__ ) . '/content' );
-define( 'WP_CONTENT_URL', 'http://' . $_SERVER['HTTP_HOST'] . '/content' );
+define( 'WP_CONTENT_URL', 'https://' . $_SERVER['HTTP_HOST'] . '/content' );
 
 // ================================================
 // You almost certainly do not want to change these
