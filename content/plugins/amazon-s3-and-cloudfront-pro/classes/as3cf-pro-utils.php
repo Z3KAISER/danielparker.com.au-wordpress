@@ -52,4 +52,20 @@ class AS3CF_Pro_Utils {
 			", $key ) );
 		}
 	}
+
+	/**
+	 * Get all the keys of background jobs that could be running
+	 *
+	 * @return array
+	 */
+	public static function get_batch_job_keys() {
+		$keys = array(
+			'wpos3_find_replace_batch_%',
+			'wpos3_legacy_upload_%',
+			'wpos3_media_actions_batch_%',
+			'wpos3_settings_change_batch_%',
+		);
+
+		return $keys;
+	}
 }

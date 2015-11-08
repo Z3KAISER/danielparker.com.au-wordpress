@@ -16,6 +16,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 require dirname( __FILE__ ) . '/classes/as3cf-pro-utils.php';
 require dirname( __FILE__ ) . '/classes/wp-aws-uninstall.php';
+// We cannot require the Pro class, as it will cause a fatal error if WPOS3 is not installed.
 
 $options = array(
 	'as3cfpro_licence_issue_type',
@@ -26,13 +27,8 @@ $postmeta = array(
 	'wpos3_old_meta',
 );
 
+$keys = AS3CF_Pro_Utils::get_batch_job_keys();
 // Delete wildcard options
-$keys = array(
-	'wpos3_find_replace_batch_%',
-	'wpos3_legacy_upload_%',
-	'wpos3_media_actions_batch_%',
-	'wpos3_settings_change_batch_%',
-);
 AS3CF_Pro_Utils::delete_wildcard_options( $keys );
 
 $crons = array(
@@ -56,6 +52,8 @@ $transients = array(
 	'wpos3_media_actions_process_lock',
 	'wpos3_settings_change_process_lock',
 	'wpos3_legacy_upload',
+	'as3cfpro_plugins_to_install_installer',
+	'as3cfpro_plugins_to_install_addons',
 );
 
 $as3cf_uninstall = new WP_AWS_Uninstall( $options, $postmeta, $crons, $transients );

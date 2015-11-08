@@ -73,16 +73,18 @@ abstract class Delicious_Brains_API_Licences extends Delicious_Brains_API_Base {
 			$addons = array();
 
 			if ( isset ( $GLOBALS[ $meta_key ][ $this->plugin->slug ]['supported_addon_versions'] ) ) {
+				$available_addons = get_site_transient( $this->plugin->prefix . '_addons_available' );
+
 				foreach ( $GLOBALS[ $meta_key ][ $this->plugin->slug ]['supported_addon_versions'] as $addon => $version ) {
 					$basename  = $this->plugin->get_plugin_basename( $addon );
 					$name      = $this->plugin->get_plugin_name( $addon );
 					$installed = file_exists( WP_PLUGIN_DIR . '/' . $basename );
-					$available = get_site_transient( $this->plugin->prefix . '_addons_available' );
 
 					$addons[ $basename ] = array(
 						'name'             => $name,
+						'slug'             => $addon,
 						'required_version' => $version,
-						'available'        => ( false === $available || isset( $available[ $addon ] ) ),
+						'available'        => ( false === $available_addons || isset( $available_addons[ $addon ] ) ),
 						'installed'        => $installed,
 					);
 				}

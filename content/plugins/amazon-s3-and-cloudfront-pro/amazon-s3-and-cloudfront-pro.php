@@ -4,7 +4,7 @@ Plugin Name: WP Offload S3 - Pro Upgrade
 Plugin URI:  http://deliciousbrains.com/wp-offload-s3/
 Description: Pro upgrade of WP Offload S3 for media uploads to Amazon S3 for storage and delivery.
 Author: Delicious Brains
-Version: 1.0.1
+Version: 1.0.3
 Author URI: http://deliciousbrains.com/
 Network: True
 Text Domain: as3cf-pro
@@ -25,9 +25,11 @@ Domain Path: /languages/
 
 require_once dirname( __FILE__ ) . '/version.php';
 
-$as3cf_plugin_version_required = '0.9.4';
+$as3cf_plugin_version_required = '0.9.8';
 
-require dirname( __FILE__ ) . '/classes/as3cf-pro-installer.php';
+require_once dirname( __FILE__ ) . '/classes/as3cf-pro-installer.php';
+require_once dirname( __FILE__ ) . '/classes/as3cf-pro-plugin-installer.php';
+
 global $as3cf_pro_compat_check;
 $as3cf_pro_compat_check = new AS3CF_Pro_Installer( __FILE__, $as3cf_plugin_version_required );
 

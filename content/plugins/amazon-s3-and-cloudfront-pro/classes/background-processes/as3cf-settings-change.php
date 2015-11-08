@@ -101,7 +101,8 @@ class AS3CF_Settings_Change_Background_Process extends AS3CF_Background_Process 
 		$count   = number_format_i18n( $this->total_processed );
 		$message = __( '<strong>Find & Replace Complete</strong> &mdash; %s URLs have been updated in your content to reflect the new URL settings.', 'as3cf-pro' );
 
-		$this->as3cf->set_admin_notice( sprintf( $message, $count ) );
+		$this->as3cf->notices->add_notice( sprintf( $message, $count ) );
+		$this->as3cf->notices->remove_notice_by_id( 'as3cf-notice-running-find-replace' );
 	}
 
 }

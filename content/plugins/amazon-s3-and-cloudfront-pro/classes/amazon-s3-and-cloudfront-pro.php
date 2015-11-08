@@ -80,7 +80,7 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 	 * Enable the complete plugin when compatible
 	 */
 	function enable_plugin() {
-		add_action( 'as3cf_media_pre_tab_render', array( $this, 'media_to_upload_notices' ) );
+		add_action( 'as3cf_media_pre_tab_render', array( $this, 'media_to_upload_notices' ), 100 );
 		add_action( 'as3cf_post_settings_render', array( $this, 'upload_modal' ) );
 		add_action( 'as3cf_post_settings_render', array( $this, 'upload_redirects_modal' ) );
 
@@ -99,6 +99,7 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 		// pro customisations
 		add_filter( 'as3cf_settings_page_title', array( $this, 'settings_page_title' ) );
 		add_filter( 'as3cf_settings_tabs', array( $this, 'settings_tabs' ) );
+		add_filter( 'as3cf_lost_files_notice', array( $this, 'lost_files_notice' ) );
 
 		// media row actions
 		add_filter( 'wp_prepare_attachment_for_js', array( $this, 'enrich_attachment_model' ), 10, 2 );
@@ -120,9 +121,11 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 
 		// Settings link on the plugins page
 		add_filter( 'plugin_action_links', array( $this, 'plugin_actions_settings_link' ), 10, 2 );
+		// Diagnostic info
+		add_action( 'as3cf_diagnostic_info', array( $this, 'diagnostic_info' ) );
 
 		// include compatibility code for other plugins
-		new AS3CF_Pro_Plugin_Compatibility( $this );
+		$this->plugin_compat = new AS3CF_Pro_Plugin_Compatibility( $this );
 
 		// Init settings change request
 		$this->init_settings_change_request = new AS3CF_Init_Settings_Change( $this );
@@ -244,7 +247,7 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 	function load_attachment_assets( $hook_suffix ) {
 		$version = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? time() : $this->plugin_version;
 		$suffix  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		
+
 		// Register script for later use
 		$src = plugins_url( 'assets/js/find-replace-media' . $suffix . '.js', $this->plugin_file_path );
 		wp_register_script( 'as3cf-pro-find-replace-media', $src, array( 'jquery', 'as3cf-modal' ), $version, true );
@@ -329,9 +332,15 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 	 * Accessor for plugin slug to make sure we don't add pro suffix
 	 * when comparing the plugin slug in the settings form
 	 *
+	 * @param bool $true_slug
+	 *
 	 * @return string
 	 */
-	public function get_plugin_slug() {
+	public function get_plugin_slug( $true_slug = false ) {
+		if ( $true_slug ) {
+			return $this->plugin_slug;
+		}
+
 		global $as3cf;
 
 		return $as3cf->get_plugin_slug();
@@ -382,6 +391,17 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 	}
 
 	/**
+	 * Add bulk action explanation to lost files notice
+	 *
+	 * @param string $notice
+	 *
+	 * @return string
+	 */
+	function lost_files_notice( $notice ) {
+		return $notice . ' ' . __( 'Alternatively, use the Media Library bulk action <strong>Copy to Server from S3</strong> to ensure the local files exist.', 'as3cf-pro' );
+	}
+
+	/**
 	 * Initiate find and replace on settings update.
 	 */
 	function pre_save_settings() {
@@ -397,7 +417,10 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 			$data['new'][ $key ]      = sanitize_text_field( $_POST[ $key ] ); // input var ok
 		}
 
-		$this->set_admin_notice( __( '<strong>Running Find & Replace</strong> &mdash; URLs within your content are being updated in the background. This may take a while depending on how many items you have in your Media Library.', 'as3cf-pro' ) );
+		$this->notices->add_notice(
+			__( '<strong>Running Find & Replace</strong> &mdash; URLs within your content are being updated in the background. This may take a while depending on how many items you have in your Media Library.', 'as3cf-pro' ),
+			array( 'custom_id' => 'as3cf-notice-running-find-replace', 'flash' => false )
+		);
 
 		// Dispatch background request to process replacements
 		$this->init_settings_change_request->data( $data )->dispatch();
@@ -467,36 +490,45 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 			return;
 		}
 
-		$uploaded_percentage = $to_upload_stats['total_to_upload'] / $to_upload_stats['total_media'];
+		$uploaded_percentage = ( $to_upload_stats['total_media'] - $to_upload_stats['total_to_upload'] ) / $to_upload_stats['total_media'];
 		$human_percentage    = round( $uploaded_percentage * 100 );
 
 		// Percentage of library needs uploading
 		if ( 0 === (int) $human_percentage ) {
 			$human_percentage = 1;
 		}
-		$message = sprintf( __( "%s%% of your Media Library hasn't been uploaded to S3 yet.", 'as3cf-pro' ), $human_percentage );
-		$upload  = true;
+		$message            = sprintf( __( "%s%% of your Media Library has been uploaded to S3.", 'as3cf-pro' ), $human_percentage );
+		$show_upload        = true;
+		$upload_button_text = __( 'Upload Remaining Now', 'as3cf-pro' );
 
 		// Entire media library uploaded
-		if ( 0 === $uploaded_percentage ) {
-			$message = __( '100% of your Media Library has been uploaded to S3, congratulations!', 'as3cf-pro' );
-			$upload  = false;
+		if ( 1 === $uploaded_percentage ) {
+			$message     = __( '100% of your Media Library has been uploaded to S3, congratulations!', 'as3cf-pro' );
+			$show_upload = false;
+
+			// Remove previous errors
+			if ( $this->get_setting( 'bulk_upload_errors', false ) ) {
+				$this->remove_setting( 'bulk_upload_errors' );
+				$this->save_settings();
+			}
 		}
 
 		// Entire library needs uploading
-		if ( 1 === $uploaded_percentage ) {
-			$message = __( 'Your Media Library needs to be uploaded to S3.', 'as3cf-pro' );
+		if ( 0 === $uploaded_percentage ) {
+			$message            = __( 'Your Media Library needs to be uploaded to S3.', 'as3cf-pro' );
+			$upload_button_text = __( 'Upload Now', 'as3cf-pro' );
 		}
 
 		$args = array(
-			'message' => $message,
-			'upload'  => $upload,
+			'message'            => $message,
+			'show_upload'        => $show_upload,
+			'upload_button_text' => $upload_button_text,
 		);
 
 		$this->render_view( 'upload-notice', $args );
 
 		// Show errors notice only when upload button visible
-		if ( $upload ) {
+		if ( $show_upload ) {
 			$this->media_to_upload_errors_notice();
 		}
 	}
@@ -797,6 +829,13 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 		$new_url = ( $upload ) ? $s3_url : $local_url;
 
 		$this->find_and_replace_urls( $file_path, $old_url, $new_url, $meta );
+
+		// On legacy MS installs (pre 3.5) we need to also search for attachment GUID
+		// as paths were rewritten to exclude '/wp-content/blogs.dir/'
+		if ( is_multisite() && false !== strpos( $local_url, '/blogs.dir/' ) ) {
+			$old_url = get_the_guid( $attachment_id );
+			$this->find_and_replace_urls( $file_path, $old_url, $new_url, $meta );
+		}
 	}
 
 	/**
@@ -975,15 +1014,15 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 			$this->switch_to_blog( $id );
 
 			$count = 0;
-			$total = $this->get_attachments_to_upload( $blog['prefix'], $id, true );
+			$total = $this->get_attachments_to_upload( $blogs[ $id ]['prefix'], $id, true );
 
-			if ( ! isset( $blog['last_attachment'] ) ) {
-				$blog['last_attachment'] = null;
+			if ( ! isset( $blogs[ $id ]['last_attachment'] ) ) {
+				$blogs[ $id ]['last_attachment'] = null;
 			}
 
 			// Process attachments in batches
 			do {
-				$attachments = $this->get_attachments_to_upload( $blog['prefix'], $id, false, $limit, $blog['last_attachment'] );
+				$attachments = $this->get_attachments_to_upload( $blogs[ $id ]['prefix'], $id, false, $limit, $blogs[ $id ]['last_attachment'] );
 
 				if ( empty( $attachments ) ) {
 					// No attachments remaining to process, remove blog from queue
@@ -1000,14 +1039,12 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 					$progress['total_files']++;
 					$count++;
 
-					$blog['last_attachment'] = $attachment->ID;
-				}
+					$blogs[ $id ]['last_attachment'] = $attachment->ID;
 
-				if ( time() >= $finish_time ) {
-					// Time limit exceeded, update queue and break past outermost loop
-					$blogs[ $id ] = $blog;
-
-					break 2;
+					if ( time() >= $finish_time ) {
+						// Time limit exceeded
+						break 3;
+					}
 				}
 			} while ( $count <= $total );
 
@@ -1842,10 +1879,13 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 			}
 
 			if ( $do_find_and_replace ) {
+				global $blog_id;
+
 				// Push task to background process
 				$data = array(
 					'action'        => 'remove',
 					'attachment_id' => $post_id,
+					'blog_id'       => $blog_id,
 					'upload'        => false,
 				);
 				$this->media_actions_process->push_to_queue( $data );
@@ -2008,6 +2048,15 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 	}
 
 	/**
+	 * Get the addons for the plugin with license information
+	 *
+	 * @return array
+	 */
+	public function get_plugin_addons() {
+		return $this->licence->addons;
+	}
+
+	/**
 	 * Check to see if the plugin is setup
 	 *
 	 * @return bool
@@ -2064,6 +2113,61 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 		$count = $wpdb->get_var( $sql );
 
 		return $count;
+	}
+
+	/**
+	 * Pro specific diagnostic info
+	 */
+	function diagnostic_info() {
+		echo 'Pro Upgrade: ';
+		echo "\r\n";
+		echo 'License Status: ';
+		$status      = $this->licence->is_licence_expired();
+		$status_text = 'Valid';
+		if ( isset( $status['errors'] ) ) {
+			reset( $status['errors'] );
+			$status_text = key( $status['errors'] );
+		}
+		echo ucwords( str_replace( '_', ' ', $status_text ) );
+		echo "\r\n";
+		echo 'License Constant: ';
+		echo $this->licence->is_licence_constant() ? 'On' : 'Off';
+		echo "\r\n\r\n";
+
+		// Background processing jobs
+		echo 'Background Jobs: ';
+		$job_keys = AS3CF_Pro_Utils::get_batch_job_keys();
+
+		global $wpdb;
+		$table        = $wpdb->options;
+		$column       = 'option_name';
+		$value_column = 'option_value';
+
+		if ( is_multisite() ) {
+			$table        = $wpdb->sitemeta;
+			$column       = 'meta_key';
+			$value_column = 'meta_value';
+		}
+
+		foreach ( $job_keys as $key ) {
+			$jobs = $wpdb->get_results( $wpdb->prepare( "
+				SELECT * FROM {$table}
+				WHERE {$column} LIKE %s
+			", $key ) );
+
+			if ( empty( $jobs ) ) {
+				continue;
+			}
+
+			foreach ( $jobs as $job ) {
+				echo $job->{$column};
+				echo "\r\n";
+				print_r( maybe_unserialize( $job->{$value_column} ) );
+				echo "\r\n";
+			}
+		}
+
+		echo "\r\n\r\n";
 	}
 
 }

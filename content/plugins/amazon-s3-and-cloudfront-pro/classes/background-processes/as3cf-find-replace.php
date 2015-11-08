@@ -48,7 +48,7 @@ class AS3CF_Find_Replace extends AS3CF_Background_Process {
 	protected function complete() {
 		parent::complete();
 
-		$this->as3cf->set_admin_notice( __( '<strong>Find & Replace Complete</strong> &mdash; Media items within your content have been updated to use the S3 URLs.', 'as3cf-pro' ) );
+		$this->as3cf->notices->add_notice( __( '<strong>Find & Replace Complete</strong> &mdash; Media items within your content have been updated to use the S3 URLs.', 'as3cf-pro' ) );
 	}
 
 }

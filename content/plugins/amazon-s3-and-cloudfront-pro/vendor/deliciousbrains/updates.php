@@ -627,7 +627,7 @@ class Delicious_Brains_API_Updates {
 		$licence_response = $this->licences->is_licence_expired();
 		$licence_problem  = isset( $licence_response['errors'] );
 
-		$update_url = wp_nonce_url( $this->licences->admin_url( 'update.php?action=upgrade-plugin&plugin=' . urlencode( $this->licences->plugin->basename ) ), 'upgrade-plugin_' . $this->licences->plugin->basename );
+		$update_url = wp_nonce_url( $this->licences->admin_url( 'update.php?action=upgrade-plugin&plugin=' . urlencode( $basename ) ), 'upgrade-plugin_' . $basename );
 
 		$installed_version = $this->get_installed_version( $slug );
 		$latest_version    = $this->get_latest_version( $slug, $installed_version );

@@ -583,9 +583,6 @@
 			doingAjax = false;
 			nonFatalErrors = false;
 
-			// refresh upload notices on settings page behind modal
-			updateUploadNotices();
-
 			$( '.progress-label' ).remove();
 			$( '.upload-progress-ajax-spinner' ).remove();
 			$( '.close-progress-content' ).show();
@@ -600,6 +597,10 @@
 				data    : {
 					action: 'as3cfpro_finish_upload',
 					nonce : as3cfpro.nonces.finish_upload
+				},
+				success: function() {
+					// Refresh upload notices on settings page behind modal
+					updateUploadNotices();
 				}
 			} );
 		};

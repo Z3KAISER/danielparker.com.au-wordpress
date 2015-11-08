@@ -18,7 +18,7 @@
 		<?php endforeach; ?>
 	</ul>
 	<p>
-		<a href="#" class="button button-large install-plugins"><?php _e( 'Install & Activate Now' ); ?></a>
+		<a href="#" class="button button-large install-plugins" data-process="installer"><?php _e( 'Install & Activate Now' ); ?></a>
 	</p>
 	<p>
 		<em>

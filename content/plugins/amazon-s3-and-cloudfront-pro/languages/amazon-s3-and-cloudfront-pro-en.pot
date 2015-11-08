@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: amazon-s3-and-cloudfront-pro\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2015-08-27 20:05+0100\n"
+"POT-Creation-Date: 2015-11-02 13:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,274 +17,259 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: classes/amazon-s3-and-cloudfront-pro.php:172
+#: classes/amazon-s3-and-cloudfront-pro.php:175
 #: view/upload-progress.php:19
 msgctxt "Temporarily stop uploading"
 msgid "Pause"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:173
+#: classes/amazon-s3-and-cloudfront-pro.php:176
 msgctxt "Upload finished"
 msgid "Complete"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:174
+#: classes/amazon-s3-and-cloudfront-pro.php:177
 msgctxt "The upload has been temporarily stopped"
 msgid "Upload Paused"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:175
+#: classes/amazon-s3-and-cloudfront-pro.php:178
 msgctxt "Restart uploading after it was paused"
 msgid "Resume"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:176
+#: classes/amazon-s3-and-cloudfront-pro.php:179
 msgctxt "Copy of data to S3 did not complete"
 msgid "Upload failed"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:177
+#: classes/amazon-s3-and-cloudfront-pro.php:180
 msgctxt "Number of files uploaded to S3"
 msgid "Files Uploaded"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:178
+#: classes/amazon-s3-and-cloudfront-pro.php:181
 #, php-format
 msgctxt "Number of files out of total uploaded to S3"
 msgid "%1$d of %2$d Files Uploaded"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:179
+#: classes/amazon-s3-and-cloudfront-pro.php:182
 msgid "Upload completed with some errors"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:180
+#: classes/amazon-s3-and-cloudfront-pro.php:183
 msgid "Upload partially completed with some errors"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:181
+#: classes/amazon-s3-and-cloudfront-pro.php:184
 msgctxt "The upload is being cancelled"
 msgid "Cancelling upload"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:182
+#: classes/amazon-s3-and-cloudfront-pro.php:185
 msgid "Completing current media upload batch"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:183
+#: classes/amazon-s3-and-cloudfront-pro.php:186
 msgctxt "The upload has been temporarily stopped"
 msgid "Paused"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:184
+#: classes/amazon-s3-and-cloudfront-pro.php:187
 msgctxt "The upload is being paused"
 msgid "Pausing&hellip;"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:185
+#: classes/amazon-s3-and-cloudfront-pro.php:188
 msgid "Upload cancellation failed"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:186
+#: classes/amazon-s3-and-cloudfront-pro.php:189
 msgctxt "The upload has been cancelled"
 msgid "Upload cancelled"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:187
+#: classes/amazon-s3-and-cloudfront-pro.php:190
 msgctxt "The upload is in the last stages"
 msgid "Finalizing upload"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:188
+#: classes/amazon-s3-and-cloudfront-pro.php:191
 msgctxt "Confirmation required"
 msgid "Are you sure you want to leave whilst uploading to S3?"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:189
+#: classes/amazon-s3-and-cloudfront-pro.php:192
 msgctxt "Hide upload errors"
 msgid "Hide"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:190
+#: classes/amazon-s3-and-cloudfront-pro.php:193
 #: view/upload-errors.php:10
 #: view/upload-progress.php:27
 msgctxt "Show upload errors"
 msgid "Show"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:191
+#: classes/amazon-s3-and-cloudfront-pro.php:194
 #: view/upload-progress.php:25
 msgctxt "Upload errors"
 msgid "Errors"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:192
+#: classes/amazon-s3-and-cloudfront-pro.php:195
 msgctxt "Upload error"
 msgid "Error"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:282
+#: classes/amazon-s3-and-cloudfront-pro.php:285
 msgid "Copy to S3"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:283
+#: classes/amazon-s3-and-cloudfront-pro.php:286
 msgid "Remove from S3"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:284
+#: classes/amazon-s3-and-cloudfront-pro.php:287
 msgid "Copy to Server from S3"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:285
+#: classes/amazon-s3-and-cloudfront-pro.php:288
 msgid ""
 "This file does not exist locally so removing it from S3 will result in "
 "broken links on your site. Are you sure you want to continue?"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:286
+#: classes/amazon-s3-and-cloudfront-pro.php:289
 msgid ""
 "Some files do not exist locally so removing them from S3 will result in "
 "broken links on your site. Are you sure you want to continue?"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:287
+#: classes/amazon-s3-and-cloudfront-pro.php:290
 msgctxt "Amazon S3 bucket"
 msgid "Bucket"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:288
+#: classes/amazon-s3-and-cloudfront-pro.php:291
 msgctxt "Path to file on Amazon S3"
 msgid "Path"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:289
+#: classes/amazon-s3-and-cloudfront-pro.php:292
 msgctxt "Location of Amazon S3 bucket"
 msgid "Region"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:290
+#: classes/amazon-s3-and-cloudfront-pro.php:293
 msgctxt "Access control list of the file on Amazon S3"
 msgid "Access"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:291
-#: classes/amazon-s3-and-cloudfront-pro.php:1394
+#: classes/amazon-s3-and-cloudfront-pro.php:294
+#: classes/amazon-s3-and-cloudfront-pro.php:1431
 msgid "Amazon S3"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:378
+#: classes/amazon-s3-and-cloudfront-pro.php:387
 msgctxt "Show the license and support tab"
 msgid "License & Support"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:400
+#: classes/amazon-s3-and-cloudfront-pro.php:401
+msgid ""
+"Alternatively, use the Media Library bulk action <strong>Copy to Server from "
+"S3</strong> to ensure the local files exist."
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront-pro.php:421
 msgid ""
 "<strong>Running Find & Replace</strong> &mdash; URLs within your content are "
 "being updated in the background. This may take a while depending on how many "
 "items you have in your Media Library."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:477
+#: classes/amazon-s3-and-cloudfront-pro.php:500
 #, php-format
-msgid "%s%% of your Media Library hasn't been uploaded to S3 yet."
+msgid "%s%% of your Media Library has been uploaded to S3."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:482
+#: classes/amazon-s3-and-cloudfront-pro.php:502
+msgid "Upload Remaining Now"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront-pro.php:506
 #, php-format
 msgid "100% of your Media Library has been uploaded to S3, congratulations!"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:488
+#: classes/amazon-s3-and-cloudfront-pro.php:518
 msgid "Your Media Library needs to be uploaded to S3."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:527
+#: classes/amazon-s3-and-cloudfront-pro.php:519
+#: view/upload-errors.php:6
+msgid "Upload Now"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront-pro.php:559
 msgid ""
 "Previous attempts at uploading your media library have resulted in errors."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:938
+#: classes/amazon-s3-and-cloudfront-pro.php:977
 msgid "Upload already in process."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:1020
+#: classes/amazon-s3-and-cloudfront-pro.php:1057
 msgid "No files to upload."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:1097
+#: classes/amazon-s3-and-cloudfront-pro.php:1134
 #, php-format
 msgid "Could not upload file %s to S3 - %s"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:1726
+#: classes/amazon-s3-and-cloudfront-pro.php:1763
 msgid "Media successfully copied to S3"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:1727
+#: classes/amazon-s3-and-cloudfront-pro.php:1764
 msgid "Media copied to S3 with some errors"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:1728
+#: classes/amazon-s3-and-cloudfront-pro.php:1765
 msgid "There were errors when copying the media to S3"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:1731
+#: classes/amazon-s3-and-cloudfront-pro.php:1768
 msgid "Media successfully removed from S3"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:1732
+#: classes/amazon-s3-and-cloudfront-pro.php:1769
 msgid "Media removed from S3, with some errors"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:1733
+#: classes/amazon-s3-and-cloudfront-pro.php:1770
 msgid "There were errors when removing the media from S3"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:1736
+#: classes/amazon-s3-and-cloudfront-pro.php:1773
 msgid "Media successfully downloaded from S3"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:1737
+#: classes/amazon-s3-and-cloudfront-pro.php:1774
 msgid "Media downloaded from S3, with some errors"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront-pro.php:1738
+#: classes/amazon-s3-and-cloudfront-pro.php:1775
 msgid "There were errors when downloading the media from S3"
 msgstr ""
 
 #: classes/as3cf-background-process.php:355
 #, php-format
 msgid "Every %d Minutes"
-msgstr ""
-
-#: classes/as3cf-pro-installer.php:180
-msgid "Installing"
-msgstr ""
-
-#: classes/as3cf-pro-installer.php:181
-msgid "There was an error during the installation"
-msgstr ""
-
-#: classes/as3cf-pro-installer.php:201
-msgid "You do not have sufficient permissions to install plugins on this site."
-msgstr ""
-
-#: classes/as3cf-pro-installer.php:354
-msgid "Unable to connect to the filesystem. Please confirm your credentials."
-msgstr ""
-
-#: classes/as3cf-pro-installer.php:377
-msgid "but not activated"
-msgstr ""
-
-#: classes/as3cf-pro-installer.php:401
-#, php-format
-msgid "%s installed successfully"
-msgstr ""
-
-#: classes/as3cf-pro-installer.php:404
-#, php-format
-msgid "%s not installed"
 msgstr ""
 
 #: classes/as3cf-pro-licences-updates.php:152
@@ -450,6 +435,68 @@ msgid ""
 "updates."
 msgstr ""
 
+#: classes/as3cf-pro-plugin-compatibility.php:63
+msgid "You must have a valid license to install these addons."
+msgstr ""
+
+#: classes/as3cf-pro-plugin-compatibility.php:87
+msgid "Install & Activate Addon"
+msgstr ""
+
+#: classes/as3cf-pro-plugin-compatibility.php:88
+msgid "Install & Activate Addons"
+msgstr ""
+
+#: classes/as3cf-pro-plugin-compatibility.php:101
+msgid "Addon"
+msgstr ""
+
+#: classes/as3cf-pro-plugin-compatibility.php:113
+msgid ""
+"Unfortunately, your current license does not give you access to the "
+"following addon. You need to upgrade your license to get this addon."
+msgstr ""
+
+#: classes/as3cf-pro-plugin-compatibility.php:114
+msgid ""
+"Unfortunately, your current license does not give you access to the "
+"following addons. You need to upgrade your license to get these addons."
+msgstr ""
+
+#: classes/as3cf-pro-plugin-compatibility.php:120
+msgid "View License Upgrades"
+msgstr ""
+
+#: classes/as3cf-pro-plugin-installer.php:84
+msgid "Installing"
+msgstr ""
+
+#: classes/as3cf-pro-plugin-installer.php:85
+msgid "There was an error during the installation"
+msgstr ""
+
+#: classes/as3cf-pro-plugin-installer.php:107
+msgid "You do not have sufficient permissions to install plugins on this site."
+msgstr ""
+
+#: classes/as3cf-pro-plugin-installer.php:261
+msgid "Unable to connect to the filesystem. Please confirm your credentials."
+msgstr ""
+
+#: classes/as3cf-pro-plugin-installer.php:284
+msgid "but not activated"
+msgstr ""
+
+#: classes/as3cf-pro-plugin-installer.php:308
+#, php-format
+msgid "%s installed successfully"
+msgstr ""
+
+#: classes/as3cf-pro-plugin-installer.php:311
+#, php-format
+msgid "%s not installed"
+msgstr ""
+
 #: classes/background-processes/as3cf-find-replace.php:51
 msgid ""
 "<strong>Find & Replace Complete</strong> &mdash; Media items within your "
@@ -507,6 +554,7 @@ msgid "You currently have version %s installed."
 msgstr ""
 
 #: classes/wp-aws-compatibility-check.php:350
+#: classes/wp-aws-compatibility-check.php:388
 #, php-format
 msgid "A valid license for %s is required to update."
 msgstr ""
@@ -534,7 +582,7 @@ msgstr ""
 msgid "Update %s to the latest version"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:442
+#: classes/wp-aws-compatibility-check.php:451
 #, php-format
 msgid "The %s plugin has been deactivated."
 msgstr ""
@@ -584,12 +632,12 @@ msgstr ""
 msgid "Here's the most recent update on its status"
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:190
+#: vendor/deliciousbrains/licences.php:192
 #: vendor/deliciousbrains/updates.php:358
 msgid "enter your license key"
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:191
+#: vendor/deliciousbrains/licences.php:193
 #: vendor/deliciousbrains/updates.php:359
 #, php-format
 msgid ""
@@ -597,36 +645,36 @@ msgid ""
 "href=\"%3$s\">purchase one</a>."
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:278
+#: vendor/deliciousbrains/licences.php:280
 #, php-format
 msgid ""
 "<strong>Activate Your License</strong> &mdash; Please <a href=\"#\" class="
 "\"%s\">enter your license key</a>."
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:296
+#: vendor/deliciousbrains/licences.php:298
 msgid ""
 "<strong>We've temporarily activated your license and will complete the "
 "activation once the Delicious Brains API is available again.</strong>"
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:306
+#: vendor/deliciousbrains/licences.php:308
 #, php-format
 msgid ""
 "<strong>Your License Was Cancelled</strong> &mdash; Please visit <a href=\"%s"
 "\" target=\"_blank\">My Account</a> to renew or upgrade your license."
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:307
-#: vendor/deliciousbrains/licences.php:310
-#: vendor/deliciousbrains/licences.php:313
-#: vendor/deliciousbrains/licences.php:320
+#: vendor/deliciousbrains/licences.php:309
+#: vendor/deliciousbrains/licences.php:312
+#: vendor/deliciousbrains/licences.php:315
+#: vendor/deliciousbrains/licences.php:322
 #: vendor/deliciousbrains/updates.php:195
 #: vendor/deliciousbrains/updates.php:365
 msgid "Check my license again"
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:309
+#: vendor/deliciousbrains/licences.php:311
 #, php-format
 msgid ""
 "<strong>Your License Has Expired</strong> &mdash; Your expired license has "
@@ -635,7 +683,7 @@ msgid ""
 "access to email support."
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:312
+#: vendor/deliciousbrains/licences.php:314
 #, php-format
 msgid ""
 "<strong>No Activations Left</strong> &mdash; Please visit <a href=\"%s\" "
@@ -643,7 +691,7 @@ msgid ""
 "previous activation."
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:316
+#: vendor/deliciousbrains/licences.php:318
 #, php-format
 msgid ""
 "<strong>Your License Was Not Found</strong> &mdash; Make sure you have "
@@ -651,7 +699,7 @@ msgid ""
 "\"%s\" target=\"_blank\">My Account</a>."
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:318
+#: vendor/deliciousbrains/licences.php:320
 #, php-format
 msgid ""
 "<strong>Your License Was Not Found</strong> &mdash; Perhaps you made a typo "
@@ -659,47 +707,47 @@ msgid ""
 "\"%s\" target=\"_blank\">My Account</a> to double check your license key."
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:323
+#: vendor/deliciousbrains/licences.php:325
 msgid "<strong>Your License Was Not Found</strong> &mdash; "
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:327
+#: vendor/deliciousbrains/licences.php:329
 msgid "Your License Is Inactive"
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:328
+#: vendor/deliciousbrains/licences.php:330
 msgid "Your license has been deactivated for this install."
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:328
+#: vendor/deliciousbrains/licences.php:330
 msgid "Reactivate License"
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:331
+#: vendor/deliciousbrains/licences.php:333
 #, php-format
 msgid ""
 "<strong>An Unexpected Error Occurred</strong> &mdash; Please contact us at "
 "<a href=\"%1$s\">%2$s</a> and quote the following:"
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:374
+#: vendor/deliciousbrains/licences.php:376
 msgctxt "Delete license"
 msgid "Remove"
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:502
+#: vendor/deliciousbrains/licences.php:504
 msgid ""
 "If you have an <strong>active license</strong>, you may send an email to the "
 "following address."
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:504
+#: vendor/deliciousbrains/licences.php:506
 msgid ""
 "Please copy the Diagnostic Info &amp; Error Log info below into a text file "
 "and attach it to your email."
 msgstr ""
 
-#: vendor/deliciousbrains/licences.php:595
+#: vendor/deliciousbrains/licences.php:597
 #, php-format
 msgid "Invalid nonce for: %s"
 msgstr ""
@@ -869,11 +917,6 @@ msgstr ""
 
 #: view/licence-settings.php:16
 msgid "Activate License"
-msgstr ""
-
-#: view/upload-errors.php:6
-#: view/upload-notice.php:5
-msgid "Upload Now"
 msgstr ""
 
 #: view/upload-progress.php:5

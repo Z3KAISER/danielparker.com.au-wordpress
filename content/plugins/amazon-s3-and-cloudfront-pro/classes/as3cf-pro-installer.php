@@ -3,10 +3,15 @@ require_once dirname( __FILE__ ) . '/wp-aws-compatibility-check.php';
 
 class AS3CF_Pro_Installer extends WP_AWS_Compatibility_Check {
 
+	/**
+	 * @var
+	 */
 	protected $required_plugins;
-	protected $installer_notices;
 
-	private $installer_action = 'as3cfpro-install-plugins';
+	/**
+	 * @var AS3CF_Pro_Plugin_Installer
+	 */
+	protected $plugin_installer;
 
 	/**
 	 * AS3CF_Pro_Installer constructor.
@@ -25,10 +30,9 @@ class AS3CF_Pro_Installer extends WP_AWS_Compatibility_Check {
 			'wordpress-s3.php'
 		);
 
-		add_action( 'wp_ajax_as3cfpro_install_plugins', array( $this, 'ajax_install_plugins' ) );
-		add_action( 'admin_init', array( $this, 'maybe_install_plugins' ) );
-		add_action( 'admin_init', array( $this, 'installer_redirect' ) );
-		add_action( 'admin_notices', array( $this, 'maybe_display_installer_notices' ) );
+		// Fire up the plugin installer
+		$this->plugin_installer = new AS3CF_Pro_Plugin_Installer( 'installer', $this->plugin_slug, $this->plugin_file_path );
+		$this->plugin_installer->set_plugins_to_install( $this->required_plugins_not_installed() );
 	}
 
 	/**
@@ -56,10 +60,12 @@ class AS3CF_Pro_Installer extends WP_AWS_Compatibility_Check {
 	/**
 	 * If the plugin is setup use the default compatible check
 	 *
+	 * @param bool $installed Check to see if the plugins are installed
+	 *
 	 * @return bool
 	 */
-	function is_compatible() {
-		if ( $this->is_setup() ) {
+	function is_compatible( $installed = true ) {
+		if ( $this->is_setup() || false === $installed ) {
 			return parent::is_compatible();
 		}
 
@@ -149,7 +155,7 @@ class AS3CF_Pro_Installer extends WP_AWS_Compatibility_Check {
 			return;
 		}
 
-		$this->load_installer_assets();
+		$this->plugin_installer->load_installer_assets();
 
 		if ( $notices = get_site_transient( 'as3cfpro_installer_notices' ) ) {
 			if ( isset( $notices['filesystem_error'] ) ) {
@@ -160,296 +166,5 @@ class AS3CF_Pro_Installer extends WP_AWS_Compatibility_Check {
 
 		$install_notice = untrailingslashit( plugin_dir_path( $this->plugin_file_path ) ) . '/view/install-notice.php';
 		include $install_notice;
-	}
-
-	/**
-	 * Load the scripts and styles required for the plugin installer
-	 */
-	function load_installer_assets() {
-		$plugin_version = $GLOBALS['aws_meta'][ $this->plugin_slug ]['version'];
-		$version        = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? time() : $plugin_version;
-		$suffix         = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
-		$src = plugins_url( 'assets/js/installer' . $suffix . '.js', $this->plugin_file_path );
-		wp_enqueue_script( 'as3cf-pro-installer', $src, array( 'jquery', 'wp-util' ), $version, true );
-
-		wp_localize_script( 'as3cf-pro-installer',
-			'as3cfpro_installer',
-			array(
-				'strings'  => array(
-					'installing'       => __( 'Installing', 'as3cf-pro' ),
-					'error_installing' => __( 'There was an error during the installation', 'as3cf-pro' ),
-				),
-				'nonces'   => array(
-					'install_plugins' => wp_create_nonce( 'install-plugins' ),
-				),
-			)
-		);
-
-		// Load thickbox scripts and style so the links work on all pages in dashboard
-		add_thickbox();
-		wp_enqueue_script( 'plugin-install' );
-	}
-
-	/**
-	 * Install and activate all required plugins
-	 *
-	 * @return bool|string|WP_Error
-	 */
-	function install_plugins() {
-		if ( ! $this->check_capabilities() ) {
-			return new WP_Error( 'exception', __( 'You do not have sufficient permissions to install plugins on this site.' ) );
-		}
-
-		$this->installer_notices = array();
-
-		$plugins_not_installed = $this->required_plugins_not_installed();
-
-		$plugins_activated = 0;
-		foreach ( $plugins_not_installed as $slug => $plugin ) {
-			if ( $this->install_plugin( $slug ) ) {
-				$plugins_activated++;
-			}
-		}
-
-		set_site_transient( 'as3cfpro_installer_notices', $this->installer_notices, 30 );
-
-		if ( $plugins_activated === count( $plugins_not_installed ) ) {
-			// All plugins installed and activated successfully
-			$url = add_query_arg( array( 'wpos3pro-install' => 1 ), network_admin_url( 'plugins.php' ) );
-
-			return esc_url_raw( $url );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Retry to install plugins if there has been a filesystem credential issue
-	 */
-	function maybe_install_plugins() {
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			return;
-		}
-
-		global $pagenow;
-		if ( 'plugins.php' !== $pagenow ) {
-			return;
-		}
-
-		if ( ! isset( $_GET['action'] ) || $this->installer_action != $_GET['action'] ) {
-			return;
-		}
-
-		check_admin_referer( $this->installer_action );
-
-		$this->request_filesystem_credentials();
-
-		$result = $this->install_plugins();
-
-		$redirect = network_admin_url( 'plugins.php' );
-		if ( ! is_wp_error( $result ) && $result !== true ) {
-			$redirect = $result;
-		}
-
-		wp_redirect( $redirect );
-		exit;
-	}
-
-	/**
-	 * AJAX handler for installing the required plugins.
-	 *
-	 */
-	function ajax_install_plugins() {
-		check_ajax_referer( 'install-plugins', 'nonce' );
-
-		$response = array(
-			'redirect' => network_admin_url( 'plugins.php' ), // redirect to the plugins page by default
-		);
-
-		$result = $this->install_plugins();
-
-		if ( is_wp_error( $result ) ) {
-			$response['error'] = $result->get_error_message();
-			wp_send_json_error( $response );
-		}
-
-		if ( $result !== true ) {
-			$response['redirect'] = $result;
-		}
-
-		wp_send_json_success( $response );
-	}
-
-	/**
-	 * Redirect to the AWS or Offload S3 page after successfully installing the plugins
-	 */
-	function installer_redirect() {
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			return;
-		}
-
-		global $pagenow;
-		if ( 'plugins.php' !== $pagenow ) {
-			return;
-		}
-
-		if ( ! isset( $_GET['wpos3pro-install'] ) ) {
-			return;
-		}
-
-		if ( ! parent::is_compatible() ) {
-			// Do not redirect if the pro plugin is not compatible
-			return;
-		}
-
-		delete_site_transient( 'as3cfpro_installer_notices' );
-
-		$page = 'amazon-web-services';
-		global $amazon_web_services;
-
-		if ( $amazon_web_services->are_access_keys_set() ) {
-			// If we somehow have the access key and secret set, redirect to the AS3CF page
-			$page = 'amazon-s3-and-cloudfront';
-		}
-
-		$url = add_query_arg( array( 'page' => $page ), network_admin_url( 'admin.php' ) );
-
-		wp_redirect( esc_url_raw( $url ) );
-		exit();
-	}
-
-	/**
-	 * Install and activate a plugin
-	 *
-	 * @param string $slug
-	 *
-	 * @return bool
-	 */
-	function install_plugin( $slug ) {
-		$status = array( 'slug' => $slug );
-
-		include_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
-		include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
-
-		$api = plugins_api( 'plugin_information', array(
-			'slug'   => $slug,
-			'fields' => array( 'sections' => false )
-		) );
-
-		if ( is_wp_error( $api ) ) {
-			$status['error'] = $api->get_error_message();
-			$this->end_install( $status );
-		}
-
-		$upgrader = new Plugin_Upgrader( new Automatic_Upgrader_Skin() );
-		$result   = $upgrader->install( $api->download_link );
-
-		if ( is_wp_error( $result ) ) {
-			$status['error'] = $result->get_error_message();
-			$this->end_install( $status );
-
-			return false;
-		} else if ( is_null( $result ) ) {
-			$status['error'] = __( 'Unable to connect to the filesystem. Please confirm your credentials.' );
-
-			$this->installer_notices['filesystem_error'] = true;
-			$this->end_install( $status );
-
-			return false;
-		}
-
-		$installed_plugin = get_plugins( '/' . $slug );
-
-		if ( ! empty( $installed_plugin ) ) {
-			$key  = array_keys( $installed_plugin );
-			$key  = reset( $key );
-			$file = $slug . '/' . $key;
-
-			$network_wide = is_multisite();
-			$activated    = activate_plugin( $file, '', $network_wide );
-		} else {
-			$activated = false;
-		}
-
-		$plugin_activated = false;
-		if ( false === $activated || is_wp_error( $activated ) ) {
-			$warning = ' ' . __( 'but not activated', 'as3cf-pro' );
-			if ( is_wp_error( $activated ) ) {
-				$warning .= ': ' . $activated->get_error_message();
-			}
-
-			$status['warning'] = $warning;
-		} else {
-			$plugin_activated = true;
-		}
-
-		$this->end_install( $status );
-
-		return $plugin_activated;
-	}
-
-	/**
-	 * Add the outcome of the install to the installer notices array to be set in a transient
-	 *
-	 * @param array $status
-	 */
-	function end_install( $status ) {
-		$plugins = $this->get_required_plugins();
-
-		$class   = 'updated';
-		$message = sprintf( __( '%s installed successfully', 'as3cf-pro' ), $plugins[ $status['slug'] ]['name'] );
-		if ( isset( $status['error'] ) ) {
-			$class   = 'error';
-			$message = sprintf( __( '%s not installed', 'as3cf-pro' ), $plugins[ $status['slug'] ]['name'] );
-			$message .= ': ' . $status['error'];
-		}
-
-		if ( isset( $status['warning'] ) ) {
-			$message .= $status['warning'];
-		}
-
-		$this->installer_notices['notices'][] = array( 'message' => $message, 'class' => $class );
-	}
-
-	/**
-	 * Get the request filesystem credentials form
-	 *
-	 * @return string Form HTML
-	 */
-	function request_filesystem_credentials() {
-		$url = wp_nonce_url( 'plugins.php?action=' . $this->installer_action, $this->installer_action );
-		ob_start();
-		request_filesystem_credentials( $url );
-		$data = ob_get_contents();
-		ob_end_clean();
-
-		return $data;
-	}
-
-	/**
-	 * Display plugin installer notices
-	 */
-	function maybe_display_installer_notices() {
-		if ( $notices = get_site_transient( 'as3cfpro_installer_notices' ) ) {
-			if ( ! isset( $notices['notices'] ) ) {
-				return;
-			}
-
-			foreach ( $notices['notices'] as $notice ) {
-				print '<div class="as3cf-pro-installer-notice ' . $notice['class'] . '"><p>' . $notice['message'] . '</p></div>';
-			}
-
-			delete_site_transient( 'as3cfpro_installer_notices' );
-
-			if ( isset( $notices['filesystem_error'] ) ) {
-				$data = $this->request_filesystem_credentials();
-				if ( ! empty( $data ) ) {
-					echo '<div class="as3cfpro-installer-filesystem-creds">';
-					echo $data;
-					echo '</div>';
-				}
-			}
-		}
 	}
 }

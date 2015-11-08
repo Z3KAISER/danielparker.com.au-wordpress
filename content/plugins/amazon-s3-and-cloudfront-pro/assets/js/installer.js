@@ -42,13 +42,15 @@
 
 			var $spinner = createSpinner( this );
 
+			var process = $( this ).data( 'process' );
+
 			$.ajax( {
 				url: ajaxurl,
 				type: 'POST',
 				dataType: 'json',
 				cache: false,
 				data: {
-					action: 'as3cfpro_install_plugins',
+					action: 'as3cfpro_install_plugins_' + process,
 					nonce: as3cfpro_installer.nonces.install_plugins,
 				},
 				error: function( jqXHR, textStatus, errorThrown ) {

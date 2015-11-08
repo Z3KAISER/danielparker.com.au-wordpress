@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: Videojs HTML5 Player
-  Version: 1.0.4
+  Version: 1.0.7
   Plugin URI: http://wphowto.net/videojs-html5-player-for-wordpress-757
   Author: naa986
   Author URI: http://wphowto.net/
@@ -15,7 +15,7 @@ if (!class_exists('VIDEOJS_HTML5_PLAYER')) {
 
     class VIDEOJS_HTML5_PLAYER {
 
-        var $plugin_version = '1.0.4';
+        var $plugin_version = '1.0.7';
 
         function __construct() {
             define('VIDEOJS_HTML5_PLAYER_VERSION', $this->plugin_version);
@@ -99,6 +99,8 @@ function videojs_html5_player_header() {
 function videojs_html5_video_embed_handler($atts) {
     extract(shortcode_atts(array(
         'url' => '',
+        'webm' => '',
+        'ogv' => '',
         'width' => '',
         'controls' => '',
         'preload' => 'auto',
@@ -108,6 +110,19 @@ function videojs_html5_video_embed_handler($atts) {
         'poster' => '',
         'class' => '',
     ), $atts));
+    if(empty($url)){
+        return 'you need to specify the src of the video file';
+    }
+    //src
+    $src = '<source src="'.$url.'" type="video/mp4" />';
+    if (!empty($webm)) {
+        $webm = '<source src="'.$webm.'" type="video/webm" />';
+        $src = $src.$webm; 
+    }
+    if (!empty($ogv)) {
+        $ogv = '<source src="'.$ogv.'" type="video/ogg" />';
+        $src = $src.$ogv; 
+    }
     //controls
     if($controls == "false") {
         $controls = "";
@@ -150,21 +165,24 @@ function videojs_html5_video_embed_handler($atts) {
     if(!empty($poster)) {
         $poster = ' poster="'.$poster.'"';
     }
-    //
-    $container = "videocontent" . uniqid();
     $player = "videojs" . uniqid();
-    $output = <<<EOT
-    <div id="$container">
-    <video id="$player" class="video-js vjs-default-skin" width="auto" height="auto"{$controls}{$preload}{$autoplay}{$loop}{$muted}{$poster} data-setup='{}'>
-        <source src="$url" type='video/mp4'>
-    </video>
-    </div>
-    <style>
-    #$container {
-        width:100%; 
-        max-width:{$width}px;
+    //custom style
+    $style = '';   
+    if(!empty($width)){
+        $style = <<<EOT
+        <style>
+        #$player {
+            max-width:{$width}px;   
+        }
+        </style>
+EOT;
+        
     }
-    </style>
+    $output = <<<EOT
+    <video id="$player" class="video-js vjs-default-skin"{$controls}{$preload}{$autoplay}{$loop}{$muted}{$poster} data-setup='{"fluid": true}'>
+        $src
+    </video>
+    $style
 EOT;
     return $output;
 }
